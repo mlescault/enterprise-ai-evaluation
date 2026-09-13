@@ -1,0 +1,390 @@
+{
+  "engine_version": "0.8",
+  "n_seeds_per_cell": 400,
+  "k1": {
+    "k_pis": 1,
+    "results": [
+      {
+        "condition": "vacuum: gap=True x mandate=none",
+        "structural_rank_gap": true,
+        "pm_mandate_access": "none",
+        "principal_seat_vacant": true,
+        "n_seeds": 400,
+        "k_pis": 1,
+        "catastrophe_count": 0,
+        "final_cumulative_catastrophe_prob": 0.0,
+        "catastrophe_prob_wilson_95ci": [
+          0.0,
+          0.0095
+        ],
+        "hazard_by_pi": [
+          0.0
+        ],
+        "mean_backlog_by_pi": [
+          5.7
+        ],
+        "mean_unreviewable_share_by_pi": [
+          0.1775
+        ],
+        "mean_final_backlog": 5.7,
+        "mean_unreviewable_backlog_final": 5.325,
+        "mean_unreviewable_share_final": 0.1775,
+        "belief_spawn_rate": 0.0,
+        "mean_guesses_per_seed": 0.505,
+        "mean_forced_per_seed": 0.0575,
+        "mean_misses_per_seed": 0.19
+      },
+      {
+        "condition": "gap=True x mandate=full_capped",
+        "structural_rank_gap": true,
+        "pm_mandate_access": "full_capped",
+        "principal_seat_vacant": false,
+        "n_seeds": 400,
+        "k_pis": 1,
+        "catastrophe_count": 0,
+        "final_cumulative_catastrophe_prob": 0.0,
+        "catastrophe_prob_wilson_95ci": [
+          0.0,
+          0.0095
+        ],
+        "hazard_by_pi": [
+          0.0
+        ],
+        "mean_backlog_by_pi": [
+          5.55
+        ],
+        "mean_unreviewable_share_by_pi": [
+          0.0
+        ],
+        "mean_final_backlog": 5.55,
+        "mean_unreviewable_backlog_final": 0.0,
+        "mean_unreviewable_share_final": 0.0,
+        "belief_spawn_rate": 0.0,
+        "mean_guesses_per_seed": 0.3175,
+        "mean_forced_per_seed": 0.335,
+        "mean_misses_per_seed": 0.185
+      },
+      {
+        "condition": "gap=False x mandate=none",
+        "structural_rank_gap": false,
+        "pm_mandate_access": "none",
+        "principal_seat_vacant": false,
+        "n_seeds": 400,
+        "k_pis": 1,
+        "catastrophe_count": 0,
+        "final_cumulative_catastrophe_prob": 0.0,
+        "catastrophe_prob_wilson_95ci": [
+          0.0,
+          0.0095
+        ],
+        "hazard_by_pi": [
+          0.0
+        ],
+        "mean_backlog_by_pi": [
+          5.4
+        ],
+        "mean_unreviewable_share_by_pi": [
+          0.0
+        ],
+        "mean_final_backlog": 5.4,
+        "mean_unreviewable_backlog_final": 0.0,
+        "mean_unreviewable_share_final": 0.0,
+        "belief_spawn_rate": 0.0,
+        "mean_guesses_per_seed": 0.4325,
+        "mean_forced_per_seed": 0.2125,
+        "mean_misses_per_seed": 0.18
+      },
+      {
+        "condition": "parity: gap=False x mandate=full_capped",
+        "structural_rank_gap": false,
+        "pm_mandate_access": "full_capped",
+        "principal_seat_vacant": false,
+        "n_seeds": 400,
+        "k_pis": 1,
+        "catastrophe_count": 0,
+        "final_cumulative_catastrophe_prob": 0.0,
+        "catastrophe_prob_wilson_95ci": [
+          0.0,
+          0.0095
+        ],
+        "hazard_by_pi": [
+          0.0
+        ],
+        "mean_backlog_by_pi": [
+          6.9
+        ],
+        "mean_unreviewable_share_by_pi": [
+          0.0
+        ],
+        "mean_final_backlog": 6.9,
+        "mean_unreviewable_backlog_final": 0.0,
+        "mean_unreviewable_share_final": 0.0,
+        "belief_spawn_rate": 0.0,
+        "mean_guesses_per_seed": 0.3175,
+        "mean_forced_per_seed": 0.3625,
+        "mean_misses_per_seed": 0.23
+      }
+    ],
+    "vacuum_vs_parity_z": 0.0,
+    "vacuum_vs_parity_p": 1.0
+  },
+  "k12": {
+    "k_pis": 12,
+    "results": [
+      {
+        "condition": "vacuum: gap=True x mandate=none",
+        "structural_rank_gap": true,
+        "pm_mandate_access": "none",
+        "principal_seat_vacant": true,
+        "n_seeds": 400,
+        "k_pis": 12,
+        "catastrophe_count": 140,
+        "final_cumulative_catastrophe_prob": 0.35,
+        "catastrophe_prob_wilson_95ci": [
+          0.3049,
+          0.398
+        ],
+        "hazard_by_pi": [
+          0.0,
+          0.0,
+          0.0,
+          0.015,
+          0.04,
+          0.0675,
+          0.1075,
+          0.1625,
+          0.2,
+          0.2575,
+          0.305,
+          0.35
+        ],
+        "mean_backlog_by_pi": [
+          6.0,
+          11.28,
+          16.374,
+          21.8892,
+          27.08136,
+          32.870088,
+          38.5660704,
+          42.58285632,
+          47.926285056,
+          53.6260280448,
+          57.93082243584,
+          63.579657948672
+        ],
+        "mean_unreviewable_share_by_pi": [
+          0.1925,
+          0.32,
+          0.4354166666666667,
+          0.5129425188988732,
+          0.5928835820947405,
+          0.6489532981052019,
+          0.7060821719518273,
+          0.72801854298384,
+          0.7644766191406318,
+          0.7929078129387963,
+          0.8096246435497987,
+          0.8315366827370605
+        ],
+        "mean_final_backlog": 63.579657948672,
+        "mean_unreviewable_backlog_final": 60.675,
+        "mean_unreviewable_share_final": 0.8315366827370605,
+        "belief_spawn_rate": 0.4,
+        "mean_guesses_per_seed": 6.165,
+        "mean_forced_per_seed": 0.7525,
+        "mean_misses_per_seed": 2.2225
+      },
+      {
+        "condition": "gap=True x mandate=full_capped",
+        "structural_rank_gap": true,
+        "pm_mandate_access": "full_capped",
+        "principal_seat_vacant": false,
+        "n_seeds": 400,
+        "k_pis": 12,
+        "catastrophe_count": 5,
+        "final_cumulative_catastrophe_prob": 0.0125,
+        "catastrophe_prob_wilson_95ci": [
+          0.0054,
+          0.0289
+        ],
+        "hazard_by_pi": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0025,
+          0.005,
+          0.0075,
+          0.01,
+          0.01,
+          0.01,
+          0.0125
+        ],
+        "mean_backlog_by_pi": [
+          4.5,
+          10.5,
+          15.075000000000001,
+          17.385,
+          19.683000000000003,
+          21.971400000000003,
+          23.202120000000004,
+          23.736696000000006,
+          24.764356800000005,
+          26.486485440000006,
+          26.664188352000004,
+          27.406350681600006
+        ],
+        "mean_unreviewable_share_by_pi": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_final_backlog": 27.406350681600006,
+        "mean_unreviewable_backlog_final": 0.0,
+        "mean_unreviewable_share_final": 0.0,
+        "belief_spawn_rate": 0.44,
+        "mean_guesses_per_seed": 4.1775,
+        "mean_forced_per_seed": 3.7925,
+        "mean_misses_per_seed": 2.34
+      },
+      {
+        "condition": "gap=False x mandate=none",
+        "structural_rank_gap": false,
+        "pm_mandate_access": "none",
+        "principal_seat_vacant": false,
+        "n_seeds": 400,
+        "k_pis": 12,
+        "catastrophe_count": 5,
+        "final_cumulative_catastrophe_prob": 0.0125,
+        "catastrophe_prob_wilson_95ci": [
+          0.0054,
+          0.0289
+        ],
+        "hazard_by_pi": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.005,
+          0.005,
+          0.0075,
+          0.0075,
+          0.01,
+          0.0125
+        ],
+        "mean_backlog_by_pi": [
+          5.025,
+          9.12,
+          12.696,
+          16.381800000000002,
+          18.13044,
+          20.654352000000003,
+          21.398481600000004,
+          21.993785280000004,
+          23.745028224000006,
+          24.846022579200003,
+          25.576818063360005,
+          26.311454450688004
+        ],
+        "mean_unreviewable_share_by_pi": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_final_backlog": 26.311454450688004,
+        "mean_unreviewable_backlog_final": 0.0,
+        "mean_unreviewable_share_final": 0.0,
+        "belief_spawn_rate": 0.3775,
+        "mean_guesses_per_seed": 5,
+        "mean_forced_per_seed": 2.4475,
+        "mean_misses_per_seed": 2.2075
+      },
+      {
+        "condition": "parity: gap=False x mandate=full_capped",
+        "structural_rank_gap": false,
+        "pm_mandate_access": "full_capped",
+        "principal_seat_vacant": false,
+        "n_seeds": 400,
+        "k_pis": 12,
+        "catastrophe_count": 8,
+        "final_cumulative_catastrophe_prob": 0.02,
+        "catastrophe_prob_wilson_95ci": [
+          0.0102,
+          0.039
+        ],
+        "hazard_by_pi": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0025,
+          0.0025,
+          0.0075,
+          0.0125,
+          0.0125,
+          0.02
+        ],
+        "mean_backlog_by_pi": [
+          5.85,
+          10.53,
+          13.749,
+          16.3992,
+          19.79436,
+          20.860488000000004,
+          21.3383904,
+          23.595712320000004,
+          24.201569856000006,
+          25.061255884800005,
+          25.599004707840006,
+          26.479203766272004
+        ],
+        "mean_unreviewable_share_by_pi": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "mean_final_backlog": 26.479203766272004,
+        "mean_unreviewable_backlog_final": 0.0,
+        "mean_unreviewable_share_final": 0.0,
+        "belief_spawn_rate": 0.3875,
+        "mean_guesses_per_seed": 4.06,
+        "mean_forced_per_seed": 3.7375,
+        "mean_misses_per_seed": 2.2625
+      }
+    ],
+    "vacuum_vs_parity_z": 12.018887473892821,
+    "vacuum_vs_parity_p": 0.0
+  }
+}

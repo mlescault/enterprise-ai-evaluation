@@ -1,0 +1,86 @@
+{
+  "engine_version": "0.7",
+  "k_pis": 12,
+  "n_seeds_per_cell": 50,
+  "estimand": "cumulative hazard of first catastrophe by PI k (pre-registered), mean accumulated backlog by PI k",
+  "results": [
+    {
+      "condition": "vacuum (rank gap + no mandate)",
+      "n_seeds": 50,
+      "final_cumulative_catastrophe_prob": 0.02,
+      "hazard_by_pi": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.02,
+        0.02,
+        0.02,
+        0.02
+      ],
+      "mean_backlog_by_pi": [
+        2.4,
+        7.92,
+        9.336,
+        17.0688,
+        19.05504,
+        19.444032000000004,
+        23.355225600000004,
+        23.484180480000003,
+        23.587344384000005,
+        24.269875507200005,
+        27.215900405760006,
+        27.772720324608006
+      ],
+      "mean_final_backlog": 27.772720324608006,
+      "mean_unreviewable_backlog_final": 0.0,
+      "belief_spawn_rate": 0.46,
+      "mean_guesses_per_seed": 6.08,
+      "mean_forced_per_seed": 0.8,
+      "mean_misses_per_seed": 2.24
+    },
+    {
+      "condition": "parity (no gap + full mandate)",
+      "n_seeds": 50,
+      "final_cumulative_catastrophe_prob": 0.26,
+      "hazard_by_pi": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.06,
+        0.06,
+        0.12,
+        0.12,
+        0.12,
+        0.14,
+        0.16,
+        0.26
+      ],
+      "mean_backlog_by_pi": [
+        6.0,
+        15.12,
+        20.136,
+        22.7088,
+        28.367040000000003,
+        31.813632000000002,
+        36.130905600000006,
+        38.50472448,
+        42.683779584,
+        43.747023667200004,
+        46.157618933760006,
+        51.446095147008
+      ],
+      "mean_final_backlog": 51.446095147008,
+      "mean_unreviewable_backlog_final": 36.6,
+      "belief_spawn_rate": 0.5,
+      "mean_guesses_per_seed": 4.14,
+      "mean_forced_per_seed": 3.7,
+      "mean_misses_per_seed": 2.42
+    }
+  ]
+}
