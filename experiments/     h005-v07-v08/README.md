@@ -43,3 +43,31 @@ implementation errors, corrections, and bounded conclusions inspectable.
 See the full case study:
 
 [False-Positive Audit](../../case-study/false-positive-audit.md)
+
+## Artifact Map
+
+### Start here
+
+- [v0.7 public results summary](h005_v0_7_results_summary_public.md)
+  — documents the original false positive, the audit, and why the result was rejected.
+
+- [v0.8 retrospective summary](h005_v0_8_retrospective_summary.md)
+  — documents what survived the correction and the second self-audit.
+
+### Raw evidence
+
+- [v0.7 raw results](h005_v0_7_results.json)
+- [v0.8 raw results](h005_v0_8_results.json)
+
+### Historical analysis
+
+- [v0.8 sensitivity analysis](v08_sensitivity.py)
+  — preserved for audit provenance. It analyzes the catastrophe metric that was
+  subsequently rejected for comparative inference.
+
+### Engine source
+
+- [v0.8 simulation engine](../../simulation/enterprise_sim_engine_v0_8.py)
+
+The original v0.7 engine source will be added when the historical file is
+recovered. It will not be reconstructed and presented as the original artifact.
