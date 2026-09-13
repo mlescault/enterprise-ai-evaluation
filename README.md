@@ -2,6 +2,11 @@
 
 Adversarial evaluation and multi-agent simulation of enterprise software-production decision making, governance, and capacity allocation.
 
+## Reviewer Guide
+
+Short on time? See the [Reviewer Guide](REVIEW_GUIDE.md) for the fastest
+path through the evidence.
+
 ## Overview
 
 This repository contains a set of experiments and evaluation artifacts exploring how AI systems reason about complex enterprise software organizations.
