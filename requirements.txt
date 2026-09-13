@@ -1,0 +1,4 @@
+# No third-party Python dependencies required.
+# The published v0.8 engine and sensitivity script use only the Python standard library
+# (random, json, importlib, pathlib, sys, dataclasses).
+# Tested with Python 3.x.
