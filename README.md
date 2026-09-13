@@ -7,6 +7,22 @@ Adversarial evaluation and multi-agent simulation of enterprise software-product
 Short on time? See the [Reviewer Guide](REVIEW_GUIDE.md) for the fastest
 path through the evidence.
 
+## What This Demonstrates
+
+- Adversarial evaluation of a multi-agent organizational simulation
+- Detection and rejection of treatment leakage and structurally invalid metrics
+- Separation of retained findings from rejected results
+- Pre-registration and integrity-gate design for prospective experiments
+- Domain-expert reasoning about enterprise software governance, capacity, and dependencies
+
+## Evidence Status
+
+**Executed and audited:** H-005 v0.7/v0.8 audit sequence and retained ambiguity-resolution finding
+
+**Rejected:** v0.7 headline result and v0.8 catastrophe metric
+
+**Prospective / not yet executed:** H-006 capacity-orchestration experiment
+
 ## Overview
 
 This repository contains a set of experiments and evaluation artifacts exploring how AI systems reason about complex enterprise software organizations.
