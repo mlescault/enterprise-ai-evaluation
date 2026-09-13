@@ -34,6 +34,8 @@ Particular emphasis is placed on:
 
 ### Organizational Simulation Audit
 
+[Read the full false-positive audit case study](case-study/false-positive-audit.md)
+
 An early multi-agent experiment produced a strong result supporting the original practitioner hypothesis.
 
 A subsequent audit identified condition-specific treatment leakage in the simulation engine. The result was rejected rather than reported.
