@@ -15,7 +15,7 @@ Any parameter still marked `TBD` blocks execution.
 
 ## Documents
 
-- [Frozen experimental specification](H006_SPEC_FREEZE_1.md)
+- [Frozen experimental specification]/prospective-research/H006/H006_SPEC_FREEZE_1.md
 - [Baseline parameter registry](H006_BASELINE_PARAMETER_REGISTRY_1.md)
 
 ## Current Execution Gate
