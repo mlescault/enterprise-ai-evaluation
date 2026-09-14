@@ -24,6 +24,8 @@ From the repository root:
 python simulation/enterprise_sim_engine_v0_8.py
 ```
 
+The engine uses only the Python standard library and writes its result file to the current working directory.
+
 ### Engine v0.7
 
 The original v0.7 engine source has not yet been recovered for publication.
