@@ -2,6 +2,11 @@
   "engine_version": "0.7",
   "k_pis": 12,
   "n_seeds_per_cell": 50,
+  "catastrophe_metric": {
+    "reportable": false,
+    "status": "retired",
+    "retirement_reason": "Rejected after audit: condition-specific treatment leakage routed mandate-driven errors into a permanently non-paying-down backlog. Catastrophe fields are preserved for audit provenance only."
+  },
   "estimand": "cumulative hazard of first catastrophe by PI k (pre-registered), mean accumulated backlog by PI k",
   "results": [
     {

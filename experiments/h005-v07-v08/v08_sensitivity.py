@@ -7,7 +7,11 @@
 # See: h005_v0_8_retrospective_summary.md
 
 """
-Sensitivity checks on the v0.8 K=12 headline result (vacuum 0.35 vs parity 0.02,
+Historical sensitivity analysis of the subsequently retired v0.8 catastrophe
+metric. Preserved for audit provenance only; the catastrophe comparison is not
+a reportable finding because outcome eligibility was asymmetric across cells.
+
+The original check examined the K=12 result (vacuum 0.35 vs parity 0.02,
 z=12.0, p<0.0001, N=400/cell) before treating it as a finding rather than
 another artifact of a single hardcoded constant.
 

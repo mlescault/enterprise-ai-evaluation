@@ -1,6 +1,11 @@
 {
   "engine_version": "0.8",
   "n_seeds_per_cell": 400,
+  "catastrophe_metric": {
+    "reportable": false,
+    "status": "retired",
+    "retirement_reason": "Rejected after audit: the catastrophe pathway depended on principal_seat_vacant, so outcome eligibility was asymmetric across experimental conditions. Catastrophe fields are preserved for audit provenance only."
+  },
   "k1": {
     "k_pis": 1,
     "results": [
