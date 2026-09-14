@@ -1,17 +1,15 @@
 # PUBLICATION NOTE
-
 # Historical sensitivity analysis for the v0.8 catastrophe metric.
 # This metric was subsequently determined to be structurally invalid for
 # comparative inference and is not retained as a finding.
 # Preserved for audit provenance only.
 #
-# Historical sensitivity analysis for the v0.8 catastrophe metric.
-# That metric was subsequently determined to be structurally invalid
-# for comparative inference and is not reported as a retained finding.
-#
-# This file is preserved for audit provenance only.
 # See: h005_v0_8_retrospective_summary.md
-#
+
+"""
+Sensitivity checks on the v0.8 K=12 headline result (vacuum 0.35 vs parity 0.02,
+z=12.0, p<0.0001, N=400/cell) before treating it as a finding rather than
+another artifact of a single hardcoded constant.
 """
 Sensitivity checks on the v0.8 K=12 headline result (vacuum 0.35 vs parity 0.02,
 z=12.0, p<0.0001, N=400/cell) before treating it as a finding rather than
