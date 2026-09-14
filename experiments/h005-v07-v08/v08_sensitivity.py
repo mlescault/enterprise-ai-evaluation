@@ -10,10 +10,6 @@
 Sensitivity checks on the v0.8 K=12 headline result (vacuum 0.35 vs parity 0.02,
 z=12.0, p<0.0001, N=400/cell) before treating it as a finding rather than
 another artifact of a single hardcoded constant.
-"""
-Sensitivity checks on the v0.8 K=12 headline result (vacuum 0.35 vs parity 0.02,
-z=12.0, p<0.0001, N=400/cell) before treating it as a finding rather than
-another artifact of a single hardcoded constant.
 
 Two things are varied independently, holding the vacant-seat gating logic itself
 fixed (that's the mechanism under test, not what's being sensitivity-checked
