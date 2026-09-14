@@ -29,6 +29,13 @@ N dropped to 150/cell here (robustness scan, not the headline estimand) to
 keep this fast; the two central cells (vacuum, parity) are what's compared.
 """
 
+from pathlib import Path
+import sys
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+SIMULATION_DIR = REPO_ROOT / "simulation"
+sys.path.insert(0, str(SIMULATION_DIR))
+
 import random
 import importlib
 import enterprise_sim_engine_v0_8 as eng
