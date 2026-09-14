@@ -16,6 +16,13 @@ The engine is preserved as part of the H-005 audit trail. Its publication note i
 
 The retained v0.8 finding concerns differences in ambiguity-resolution behavior, not differences in underlying agent competence or catastrophic outcomes.
 
+## Running v0.8
+
+From the repository root:
+
+```bash
+python simulation/enterprise_sim_engine_v0_8.py
+
 ### Engine v0.7
 
 The original v0.7 engine source has not yet been recovered for publication.
