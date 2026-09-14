@@ -22,6 +22,7 @@ From the repository root:
 
 ```bash
 python simulation/enterprise_sim_engine_v0_8.py
+```
 
 ### Engine v0.7
 
