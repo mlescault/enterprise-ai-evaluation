@@ -1,4 +1,9 @@
 # PUBLICATION NOTE
+
+# Historical sensitivity analysis for the v0.8 catastrophe metric.
+# This metric was subsequently determined to be structurally invalid for
+# comparative inference and is not retained as a finding.
+# Preserved for audit provenance only.
 #
 # Historical sensitivity analysis for the v0.8 catastrophe metric.
 # That metric was subsequently determined to be structurally invalid
