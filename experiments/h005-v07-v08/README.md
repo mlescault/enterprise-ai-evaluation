@@ -57,6 +57,9 @@ See the full case study:
 ### Raw evidence
 
 - [v0.7 raw results](h005_v0_7_results.json)
+
+  > **Important:** The raw v0.8 results retain the historical `catastrophe` fields for audit provenance. Those values are not treated as a valid comparative estimand because the catastrophe pathway was later found to be structurally unavailable to the control condition (see the [case study](../../case-study/false-positive-audit.md)).
+  
 - [v0.8 raw results](h005_v0_8_results.json)
 
 ### Historical analysis
