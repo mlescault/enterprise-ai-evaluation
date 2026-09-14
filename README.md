@@ -1,41 +1,59 @@
 # Enterprise AI Evaluation
 
-A configurable experimental environment for studying organizational behavior,
-decision-making, coordination, and eventually heterogeneous AI agents inside
-complex software-development organizations.
+A work-in-progress experimental environment for studying organizational behavior,
+decision-making, coordination, and evaluation integrity in complex software-development
+organizations.
 
-I originally built this simulation to test practitioner hypotheses about how
-software organizations respond to ambiguity, dependencies, governance pressure,
-and capacity constraints.
+I originally built this simulation to test practitioner hypotheses about how software
+organizations respond to ambiguity, dependencies, governance pressure, and capacity
+constraints.
 
-When an early result strongly supported one of my own hypotheses, I audited the
-implementation, discovered that the result was being produced in part by treatment
-leakage, rejected it, corrected the experiment, and then found and rejected a second
-structurally invalid outcome metric.
+An early experiment strongly supported one of my own hypotheses. That result triggered
+additional scrutiny. I found treatment leakage, rejected the result, corrected the
+experiment, reran it, and then found and rejected a second structurally invalid outcome
+metric.
 
-That experience changed the purpose of the project.
+The most important artifact in this repository is therefore not a particular number.
+It is the audit trail showing how apparently strong evidence was tested, rejected where
+invalid, and narrowed to what remained supportable.
 
-The goal is not to build a simulation that confirms management theories or produces
-a preferred answer. The goal is to build an increasingly trustworthy experimental
-environment in which organizational behavior can be observed, measured, audited,
-and reproduced.
+[Reviewer Guide](REVIEW_GUIDE.md) — fastest path through the evidence.
 
-**Current evidence is based on rule-based stochastic simulation. Production LLMs
-have not yet been integrated into the organizational simulation.**
+---
 
-[Reviewer Guide](REVIEW_GUIDE.md) — the fastest path through the evidence.
+## Evidence at a Glance
+
+**Executed and audited**  
+H-005 v0.7 → v0.8 rule-based organizational simulation and audit sequence.
+
+**Rejected**  
+The original v0.7 headline result and the later v0.8 catastrophe comparison.
+
+**Retained**  
+A bounded behavioral observation: the experimental conditions produced different
+ambiguity-resolution behavior, particularly in the balance between guessing and
+forcing formal resolution, while observed miss rates remained similar.
+
+**Prospective / not yet executed**  
+H-006 capacity-orchestration experiment. Architecture and integrity-gate direction
+are defined, but preregistration is still in progress and baseline execution remains
+blocked pending unresolved parameters and statistical planning.
+
+**Future / not yet implemented**  
+Configurable organizational structures and heterogeneous production-LLM agents.
 
 ---
 
 ## Current Technical Scope
 
-The currently published simulation engines are **rule-based stochastic
-organizational simulations**.
+The currently published engines are **rule-based stochastic organizational
+simulations**.
 
 They do **not currently call production LLMs** and should not be interpreted as a
 production LLM-agent evaluation harness.
 
-The current work establishes and audits the organizational simulation layer:
+The current work focuses on establishing and auditing the organizational
+experimental layer:
 
 - roles and authority;
 - dependencies and ambiguity;
@@ -45,185 +63,39 @@ The current work establishes and audits the organizational simulation layer:
 - outcome measurement;
 - experimental integrity.
 
-This foundation is intentional.
+The longer-term research direction includes configurable organizations,
+heterogeneous LLM-powered agents, hidden model identity, agent mobility, and
+model × role × organization experiments.
 
-Before introducing model behavior, the project aims to make the surrounding
-experimental environment as inspectable and reliable as possible.
+That work is planned, not executed.
 
----
-
-## Research Mission
-
-The long-term goal is to create a configurable organizational laboratory that
-researchers and practitioners can adapt to their own structures, roles,
-constraints, and research questions.
-
-Rather than hard-coding a single organization, the simulation should eventually
-allow a user to define an organizational structure — hierarchy, disciplines,
-reporting relationships, team composition, dependencies, operating rules, and
-other relevant constraints — and then observe how that system behaves under
-controlled experimental conditions.
-
-A major planned milestone is the introduction of **heterogeneous LLM-powered
-agents**.
-
-Each simulated individual would be powered by a model randomly selected from a
-pool of AI systems. The simulation would retain that model assignment as
-experimental metadata, while model identity would remain hidden from the
-participating agents.
-
-In that design:
-
-- an agent would not know which model powers itself;
-- an agent would not know which models power other agents;
-- model assignments would vary across simulation seeds;
-- organizational role, authority, incentives, information, and relationships
-  would remain distinct from model identity.
-
-With agent mobility enabled, this would make it possible to observe whether
-behavioral similarities lead agents to cluster, separate, form more effective
-teams, create greater friction, or produce other patterns that were not explicitly
-programmed into the system.
-
-The purpose is not to predict those outcomes in advance.
-
-**The purpose is to create an environment capable of measuring them if they emerge.**
+See [ROADMAP.md](ROADMAP.md) for the full research direction and development roadmap.
 
 ---
 
-## Source-of-Truth Principles
+## For Reviewers
 
-This project is intended to produce observations, not preferred conclusions.
+### If you have about 2 minutes
 
-The simulator inevitably contains modeling assumptions. The goal is therefore not
-to claim perfect objectivity, but to make assumptions explicit, measurements
-reproducible, and interpretation separable from observation.
+Read:
 
-The project follows several operating principles:
+1. This README.
+2. [REVIEW_GUIDE.md](REVIEW_GUIDE.md).
 
-- **No preferred outcome.** Experimental design should not encode the conclusion
-  the experiment is expected to produce.
-- **Expose assumptions.** Role definitions, treatments, parameters, measurement
-  rules, and known limitations should remain visible.
-- **Preserve rejected results.** False positives, invalid metrics, and failed
-  experiments are part of the audit trail rather than artifacts to be hidden.
-- **Separate observation from interpretation.** The project should report what
-  was measured and under what conditions without extending claims beyond the
-  evidence.
-- **Bound conclusions.** If the evidence supports only a narrow observation,
-  report only the narrow observation.
-- **Prefer reproducibility over persuasion.** Another researcher should be able
-  to inspect the conditions, artifacts, and reasoning that produced a result.
-- **Treat confirmation as a reason for scrutiny.** Results that strongly confirm
-  an evaluator's prior belief deserve at least as much auditing as surprising
-  results.
+### If you have about 5 minutes
 
-The desired outcome is an increasingly reliable source of experimental evidence
-that others can analyze, challenge, reinterpret, extend, or build upon.
+Read:
 
----
+1. [False-Positive Audit Case Study](case-study/false-positive-audit.md)
+2. [H-005 Experiment Artifacts](experiments/h005-v07-v08/README.md)
 
-## Long-Term Research Direction
+### If you want to inspect implementation and raw evidence
 
-The project is intended to evolve from a validated organizational simulation into
-a platform for studying heterogeneous AI systems operating inside persistent
-organizations.
+Review:
 
-Potential research dimensions include:
-
-- model family × organizational role;
-- model family × organizational level;
-- homogeneous versus heterogeneous team composition;
-- negotiation, escalation, and conflict behavior;
-- ambiguity resolution and dependency management;
-- trust formation and decay;
-- agent mobility and emergent clustering;
-- local team performance versus organization-wide outcomes;
-- short-term efficiency versus long-term resilience;
-- behavior under stress, changing priorities, and incomplete information.
-
-The important unit of analysis is not necessarily the individual model.
-
-A model that performs well in one role may perform differently in another. A model
-that performs strongly in isolation may interact poorly with certain peers. A
-heterogeneous team may outperform a homogeneous team under one governance
-structure and underperform under another.
-
-The project is designed to preserve the possibility that the most interesting
-findings will be ones that were not anticipated when the experiment was created.
-
----
-
-## Development Roadmap
-
-### Phase 1 — Validate the Organizational Laboratory
-
-**Current / ongoing**
-
-Establish reproducible simulation mechanics, clean treatment boundaries,
-auditable outcome measures, explicit assumptions, and preserved experimental
-history.
-
-H-005 is the primary executed audit case.
-
-H-006 is prospective work intended to move experimental integrity controls
-earlier in the lifecycle.
-
-### Phase 2 — Generalize Organizational Structure
-
-**Planned**
-
-Move organizational structure out of hard-coded assumptions and into
-configurable data.
-
-The long-term target is to support substantially different organizations:
-small studios, functional hierarchies, matrix organizations, platform teams,
-distributed development groups, and other structures defined by the researcher.
-
-### Phase 3 — Expand Persistent Organizational Behavior
-
-**Planned**
-
-Develop richer mechanisms for agent mobility, tenure, organizational memory,
-trust, influence, dependencies, changing responsibilities, and longitudinal
-consequences.
-
-### Phase 4 — Introduce Heterogeneous LLM-Powered Agents
-
-**Planned / not yet implemented**
-
-Allow individual agents to use randomly assigned models from a heterogeneous
-LLM pool.
-
-Model identity remains hidden from participating agents while being retained
-by the simulator as experimental metadata.
-
-Assignments vary across seeds so that model effects can be distinguished from
-individual placement and organizational circumstance.
-
-### Phase 5 — Study Model × Role × Organization Interactions
-
-**Future research**
-
-Measure whether model families exhibit different patterns across roles, levels,
-peer compositions, governance systems, and operating conditions.
-
-The objective is not to produce a universal model leaderboard.
-
-The objective is to publish the conditions and measurements needed for others
-to evaluate those differences.
-
-### Phase 6 — Reusable Organizational-Agent Research Platform
-
-**Long-term goal**
-
-Enable researchers and practitioners to define their own organizational
-structures, agent populations, model pools, stressors, and measurement
-questions while preserving experimental auditability and reproducibility.
-
-Success would mean that others can use the platform to ask questions the
-original project was never designed to answer — and take the work in directions
-its creator did not anticipate.
+1. [v0.8 Simulation Engine](simulation/enterprise_sim_engine_v0_8.py)
+2. [H-005 Raw Results and Audit Artifacts](experiments/h005-v07-v08/README.md)
+3. [H-006 Prospective Design](prospective-research/H006/README.md)
 
 ---
 
@@ -231,96 +103,25 @@ its creator did not anticipate.
 
 This repository currently demonstrates:
 
-- adversarial evaluation of a multi-agent organizational simulation;
+- adversarial evaluation of a rule-based organizational simulation;
 - detection and rejection of treatment leakage;
 - detection and rejection of structurally invalid comparative metrics;
 - separation of retained findings from rejected results;
+- preservation of failed and rejected work as part of the audit trail;
 - prospective experimental design and integrity-gate development;
 - translation of enterprise software-domain expertise into testable scenarios;
-- preservation of failed and rejected work as part of the experimental record;
-- explicit separation of current evidence from future LLM-agent research.
+- bounded interpretation of evidence.
 
-The current simulation should be viewed primarily as an **experimental and
-evaluation-methodology work sample**, not as evidence of a completed production
-LLM-agent system.
+The current simulation is primarily an **experimental-methodology and evaluation
+work sample**, not evidence of a completed production LLM-agent system.
 
 ---
 
-## Evidence Status
+## H-005: Executed Audit Sequence
 
-### Executed and Audited
+The H-005 sequence is the primary executed evidence in this repository.
 
-**H-005 v0.7 → v0.8 audit sequence**
-
-The original experiment produced a strong result that supported the practitioner
-hypothesis.
-
-Audit subsequently identified treatment leakage that created a structurally
-different outcome pathway between experimental conditions.
-
-That headline result was rejected.
-
-The experiment was corrected and rerun at larger sample size.
-
-A narrower behavioral finding survived:
-
-> The experimental conditions produced different ambiguity-resolution behavior,
-> particularly in the balance between guessing and forcing formal resolution,
-> while observed miss rates remained similar.
-
-This is retained as a **behavioral observation**, not evidence that one condition
-was globally more competent or organizationally superior.
-
-See:
-
-- [H-005 experiment artifacts](experiments/h005-v07-v08/README.md)
-- [False-positive audit case study](case-study/false-positive-audit.md)
-
-### Rejected
-
-Two major results are explicitly **not retained as findings**.
-
-**H-005 v0.7 headline outcome**
-
-Rejected because treatment leakage allowed one condition to route outcomes through
-a structurally different pathway.
-
-**H-005 v0.8 catastrophe comparison**
-
-Rejected because the measured catastrophe pathway was structurally unavailable
-to the control condition.
-
-The underlying artifacts remain in the repository for audit provenance.
-
-### Prospective / Not Yet Executed
-
-**H-006 — Capacity-Orchestration Consequence Governance**
-
-H-006 is a prospective design intended to apply lessons from the H-005 audit
-before execution rather than after results appear.
-
-Its architecture and integrity-gate direction are defined, but preregistration
-is still in progress.
-
-Baseline execution is blocked until unresolved parameters and the statistical
-plan are complete.
-
-H-006 should therefore be interpreted as evidence of prospective experimental
-design discipline, **not as an executed result**.
-
-See:
-
-- [H-006 overview](prospective-research/H006/README.md)
-- [H-006 specification](prospective-research/H006/H006_SPEC_FREEZE_1.md)
-- [H-006 parameter registry](prospective-research/H006/H006_BASELINE_PARAMETER_REGISTRY_1.md)
-
----
-
-## H-005 Audit Sequence
-
-The most important artifact in the repository is not any single numeric result.
-
-It is the audit sequence:
+The process was:
 
 1. Form a falsifiable practitioner hypothesis.
 2. Execute the experiment.
@@ -333,12 +134,65 @@ It is the audit sequence:
 9. Audit the correction.
 10. Discover a second structural measurement flaw.
 11. Retire that metric.
-12. Preserve only the narrower observation that remains supported.
+12. Preserve only the narrower observation still supported by the evidence.
 
-This sequence is documented because evaluation integrity is itself one of the
-primary subjects of the project.
+### Retained Observation
 
-[Read the case study](case-study/false-positive-audit.md)
+After correction, the two conditions continued to exhibit different
+ambiguity-resolution behavior.
+
+The vacuum condition guessed more frequently and forced formal resolution less
+frequently, while observed miss rates remained similar.
+
+This is retained as a **behavioral observation**.
+
+It is not presented as evidence that one condition was globally more competent,
+more effective, or more successful than the other.
+
+### Rejected Results
+
+Two stronger-looking results are explicitly not retained.
+
+**v0.7 headline result**  
+Rejected after audit found treatment leakage that allowed one condition to route
+outcomes through a structurally different pathway.
+
+**v0.8 catastrophe comparison**  
+Rejected after audit found that the measured catastrophe pathway was structurally
+unavailable to the control condition.
+
+The underlying artifacts remain available because rejected evidence is part of the
+experimental history.
+
+See:
+
+- [False-Positive Audit Case Study](case-study/false-positive-audit.md)
+- [H-005 Evidence Directory](experiments/h005-v07-v08/README.md)
+
+---
+
+## H-006: Prospective Work
+
+H-006 is intended to move experimental-integrity controls earlier in the lifecycle.
+
+Rather than discovering treatment or measurement asymmetries after results appear,
+the design introduces stronger pre-execution parameter controls, treatment-boundary
+checks, and integrity gates.
+
+H-006 has **not been executed**.
+
+Its architecture and integrity-gate direction are defined, but preregistration is
+still in progress. Baseline execution remains blocked until unresolved parameters
+and the statistical plan are complete.
+
+H-006 should therefore be interpreted as evidence of prospective experimental
+design discipline, not as an experimental finding.
+
+See:
+
+- [H-006 Overview](prospective-research/H006/README.md)
+- [H-006 Specification](prospective-research/H006/H006_SPEC_FREEZE_1.md)
+- [H-006 Parameter Registry](prospective-research/H006/H006_BASELINE_PARAMETER_REGISTRY_1.md)
 
 ---
 
@@ -346,44 +200,39 @@ primary subjects of the project.
 
 ### Simulation
 
-The current public-release simulation engine is:
+Current published engine:
 
-[simulation/enterprise_sim_engine_v0_8.py](simulation/enterprise_sim_engine_v0_8.py)
+[enterprise_sim_engine_v0_8.py](simulation/enterprise_sim_engine_v0_8.py)
 
 The public-release version changes the original environment-specific output path
-to a repository-relative path.
+to a repository-relative path. Simulation logic is otherwise preserved for audit
+purposes.
 
-Simulation logic is otherwise preserved for audit purposes.
+See [simulation/README.md](simulation/README.md).
 
-Additional information:
-
-[simulation/README.md](simulation/README.md)
-
-### H-005 Results and Audit Artifacts
+### H-005 Results
 
 The H-005 evidence directory contains:
 
-- raw v0.7 results;
-- a public retrospective summary of the rejected v0.7 result;
-- raw v0.8 results;
-- a retrospective v0.8 audit summary;
+- raw v0.7 result data;
+- retrospective documentation of the rejected v0.7 result;
+- raw v0.8 result data;
+- retrospective v0.8 audit documentation;
 - historical sensitivity analysis;
-- links back to the published v0.8 engine.
+- links to the public v0.8 engine.
 
 [Browse H-005 evidence](experiments/h005-v07-v08/README.md)
 
-### Historical v0.7 Source Status
+### Historical v0.7 Source
 
 The original historical `enterprise_sim_engine_v0_7.py` source has not yet been
 recovered from the original working environment.
 
-It will **not** be reconstructed and presented as the historical source.
+It will not be reconstructed and presented as historical source.
 
-When the original file is recovered, it will be added to the repository as an
-audit artifact.
+When the original file is recovered, it will be added as an audit artifact.
 
-The absence of that historical source is therefore an explicit limitation of
-the current repository.
+This is an explicit limitation of the current repository.
 
 ---
 
@@ -397,64 +246,35 @@ AI system**.
 Numeric parameters are used to test experimental mechanics and behavioral
 hypotheses. They should not be interpreted as measured real-world effect sizes.
 
-The currently published engines are rule-based stochastic simulations.
-
-They do not yet invoke production LLM agents.
-
-Future integration of production models will introduce additional sources of
-variance, nondeterminism, model-version drift, provider behavior, prompt
-sensitivity, and cost that will require their own experimental controls.
-
-The project therefore distinguishes among:
+The project distinguishes three categories:
 
 **Current executed evidence**  
 Rule-based organizational simulation and adversarial experimental auditing.
 
 **Current prospective work**  
-H-006 and continued development of stronger experimental integrity controls.
+H-006 and continued development of stronger pre-execution integrity controls.
 
 **Future research direction**  
-Configurable heterogeneous LLM-powered organizational agents and direct
-measurement of model × role × team × organizational interactions.
+Configurable organizations populated by heterogeneous LLM-powered agents, with
+model identity retained as experimental metadata but hidden from participating
+agents.
+
+See [ROADMAP.md](ROADMAP.md).
 
 ---
 
-## Why Preserve Rejected Work?
+## Evaluation Principle
 
-A rejected result is useful evidence about the evaluation process.
+The purpose of this project is not to prove that one management approach,
+organizational structure, or AI model is superior to another.
 
-Removing failed experiments would make the repository look cleaner while making
-it less useful for understanding how conclusions were reached.
+The goal is to make assumptions visible, measurements reproducible, rejected
+results inspectable, and observations separable from interpretation.
 
-For that reason, rejected results, invalid metrics, corrected designs, and
-retrospective explanations are preserved when practical.
+Where the evidence supports only a narrow observation, the project should report
+only that observation.
 
-The intent is to make the history of the experiment inspectable rather than
-present only the final surviving claim.
-
----
-
-## For Reviewers
-
-If you have approximately **2 minutes**:
-
-1. Read this README.
-2. Read [REVIEW_GUIDE.md](REVIEW_GUIDE.md).
-
-If you have approximately **5 minutes**:
-
-1. Read the
-   [false-positive audit case study](case-study/false-positive-audit.md).
-2. Review the evidence-status distinction above.
-
-If you want to inspect the implementation and raw evidence:
-
-1. Review the
-   [v0.8 engine](simulation/enterprise_sim_engine_v0_8.py).
-2. Browse the
-   [H-005 experiment artifacts](experiments/h005-v07-v08/README.md).
-3. Review the
-   [H-006 prospective design](prospective-research/H006/README.md).
+Others should be free to examine the same evidence and draw different conclusions.
 
 ---
 
@@ -479,14 +299,15 @@ implemented.
 
 ---
 
-## Guiding Idea
+## Longer-Term Research Direction
 
-The project is not intended to tell researchers or practitioners what conclusions
-they should draw.
+The longer-term project aims to become a configurable environment for studying
+how heterogeneous AI systems behave inside persistent organizations.
 
-Its goal is to make the experimental conditions, assumptions, observations,
-limitations, and audit history sufficiently clear that others can examine the
-evidence and draw their own conclusions.
+That research vision is intentionally separated from the executed evidence in
+this README.
 
-If this work is successful, its most valuable future use may be something the
-original project never anticipated.
+For the full research mission, source-of-truth principles, heterogeneous-model
+design, agent-mobility questions, and development phases, see:
+
+**[ROADMAP.md](ROADMAP.md)**
