@@ -47,12 +47,19 @@ def run_pair(label):
     vac, _, _, par = conditions
     vac_r = eng.run_cell(vac, N_SEEDS_SCAN, base_seed=9001, k_pis=12)
     par_r = eng.run_cell(par, N_SEEDS_SCAN, base_seed=9002, k_pis=12)
-    z, p = eng.two_prop_z_test(vac_r["catastrophe_count"], vac_r["n_seeds"],
-                                par_r["catastrophe_count"], par_r["n_seeds"])
-    print(f"{label}: vacuum={vac_r['final_cumulative_catastrophe_prob']:.3f} "
-          f"({vac_r['catastrophe_count']}/{vac_r['n_seeds']})  "
-          f"parity={par_r['final_cumulative_catastrophe_prob']:.3f} "
-          f"({par_r['catastrophe_count']}/{par_r['n_seeds']})  z={z:.2f} p={p:.4f}")
+    z, p = eng.two_prop_z_test(
+        vac_r["catastrophe_count"],
+        vac_r["n_seeds"],
+        par_r["catastrophe_count"],
+        par_r["n_seeds"],
+    )
+    print(
+        f"{label}: vacuum={vac_r['final_cumulative_catastrophe_prob']:.3f} "
+        f"({vac_r['catastrophe_count']}/{vac_r['n_seeds']})  "
+        f"parity={par_r['final_cumulative_catastrophe_prob']:.3f} "
+        f"({par_r['catastrophe_count']}/{par_r['n_seeds']})  "
+        f"z={z:.2f} p={p:.4f}"
+    )
 
 
 print("=== Threshold sensitivity (UNREVIEWABLE_PAYDOWN_RATE fixed at 0.0) ===")
