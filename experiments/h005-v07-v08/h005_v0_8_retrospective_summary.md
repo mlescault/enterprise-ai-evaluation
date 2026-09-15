@@ -31,6 +31,8 @@ At K=12:
 | Mean misses per seed | 2.2225 | 2.2625 |
 
 The miss rates are very similar, while the resolution behavior differs substantially.
+`decision_value` never sees condition, so similar miss totals are expected by
+construction; the resolution-behavior difference is the measured result.
 
 **Bounded interpretation:** the simulated governance structure changes how agents respond to ambiguity. It does not show that one condition contains intrinsically more competent agents.
 
