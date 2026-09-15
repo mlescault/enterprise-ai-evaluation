@@ -1,5 +1,10 @@
 # Reviewer Guide
 
+If you have 60 seconds:
+Open the interactive vertical slice — a readable, click-through negotiation trace
+computed live in the browser from the real bid/mandate/rank-gap logic. No setup.
+https://mlescault.github.io/enterprise-ai-evaluation/?tab=slice
+
 If you have 2 minutes:
 Read the repository README.
 
