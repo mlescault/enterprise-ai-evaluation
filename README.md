@@ -75,6 +75,13 @@ See [ROADMAP.md](ROADMAP.md) for the full research direction and development roa
 
 ## For Reviewers
 
+### If you have about 60 seconds
+
+Open the [interactive vertical slice](https://mlescault.github.io/enterprise-ai-evaluation/?tab=slice) —
+one pod, thirteen sprint-goal issues, one meeting cycle, computed live in the browser
+from the same v0.8 bid/mandate/rank-gap logic as the executed evidence below. No setup,
+nothing to read first.
+
 ### If you have about 2 minutes
 
 Read:
@@ -214,9 +221,10 @@ See [simulation/README.md](simulation/README.md).
 
 A browser-based companion that renders the same H-005 conditions as a readable
 negotiation trace, with the retired catastrophe metric confined to historical
-display only.
+display only. Start with the vertical slice — it's the most readable and most
+citable of the four tabs.
 
-[Browse the demo](docs/README.md) · [Live version](https://mlescault.github.io/enterprise-ai-evaluation/)
+[Open the vertical slice](https://mlescault.github.io/enterprise-ai-evaluation/?tab=slice) · [Browse the demo docs](docs/README.md)
 
 ### H-005 Results
 
