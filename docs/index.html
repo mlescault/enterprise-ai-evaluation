@@ -1,0 +1,2327 @@
+<title>Vacant Seat</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #f4f5f7;
+    --surface: #ffffff;
+    --surface-2: #ececf1;
+    --border: #dadee5;
+    --ink: #171b21;
+    --ink-muted: #5b6472;
+    --ink-faint: #8890a0;
+    --vacuum: #5c5a9e;
+    --vacuum-soft: #eceafa;
+    --parity: #1f7a7a;
+    --parity-soft: #e4f3f2;
+    --good: #0ca30c;
+    --good-soft: #e4f6e0;
+    --warning: #b8790a;
+    --warning-soft: #fdf1de;
+    --critical: #d03b3b;
+    --critical-soft: #fbe6e4;
+    --focus: #2b4c7e;
+    --gm: #7a4fc4;
+    --gm-soft: #efe7fb;
+    --r-prog: #2b5fa8;
+    --r-prod: #8a4b2f;
+    --r-eng: #1f7a5c;
+    --r-td: #3f5a7a;
+    --r-lead: #444c5c;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #12151b;
+      --surface: #191d25;
+      --surface-2: #20242e;
+      --border: #2c3140;
+      --ink: #e8eaef;
+      --ink-muted: #9aa2b1;
+      --ink-faint: #6e7789;
+      --vacuum: #a6a3e0;
+      --vacuum-soft: #262244;
+      --parity: #5fc4c4;
+      --parity-soft: #123333;
+      --good: #4fbe4f;
+      --good-soft: #16321a;
+      --warning: #e3ab3f;
+      --warning-soft: #3a2c10;
+      --critical: #e2766e;
+      --critical-soft: #3a1e1c;
+      --focus: #8fb4ea;
+      --gm: #b79bea;
+      --gm-soft: #2a2140;
+      --r-prog: #7fa8e0;
+      --r-prod: #d99b7a;
+      --r-eng: #5fcfa0;
+      --r-td: #9fb8d9;
+      --r-lead: #c3c9d6;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #12151b;
+    --surface: #191d25;
+    --surface-2: #20242e;
+    --border: #2c3140;
+    --ink: #e8eaef;
+    --ink-muted: #9aa2b1;
+    --ink-faint: #6e7789;
+    --vacuum: #a6a3e0;
+    --vacuum-soft: #262244;
+    --parity: #5fc4c4;
+    --parity-soft: #123333;
+    --good: #4fbe4f;
+    --good-soft: #16321a;
+    --warning: #e3ab3f;
+    --warning-soft: #3a2c10;
+    --critical: #e2766e;
+    --critical-soft: #3a1e1c;
+    --focus: #8fb4ea;
+    --gm: #b79bea;
+    --gm-soft: #2a2140;
+    --r-prog: #7fa8e0;
+    --r-prod: #d99b7a;
+    --r-eng: #5fcfa0;
+    --r-td: #9fb8d9;
+    --r-lead: #c3c9d6;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+    padding: 0 20px;
+  }
+
+  .wrap { max-width: 980px; margin: 0 auto; padding-block: 32px 64px; }
+
+  .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+
+  header.intro { margin-bottom: 22px; }
+
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin: 0 0 10px;
+  }
+
+  h1 {
+    font-size: clamp(26px, 4vw, 34px);
+    font-weight: 600;
+    line-height: 1.15;
+    margin: 0 0 12px;
+    text-wrap: balance;
+  }
+
+  .lede {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    max-width: 62ch;
+    margin: 0 0 8px;
+  }
+
+  .provenance {
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    margin: 14px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+  }
+  .provenance a { color: var(--focus); }
+
+  /* tabs */
+  .tabs {
+    display: flex; gap: 4px;
+    border-bottom: 1px solid var(--border);
+    margin: 26px 0 0;
+  }
+  .tab {
+    font-family: inherit; font-size: 13.5px; font-weight: 600;
+    color: var(--ink-muted); background: none; border: none;
+    padding: 10px 4px; margin-right: 18px;
+    cursor: pointer; position: relative; top: 1px;
+    border-bottom: 2px solid transparent;
+  }
+  .tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--focus); }
+  .tab:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  .panel-note {
+    font-size: 13px; color: var(--ink-muted); line-height: 1.5;
+    max-width: 66ch; margin: 18px 0 0;
+  }
+
+  .run-both-row { display: flex; align-items: center; gap: 12px; margin: 14px 0 0; }
+
+  button.run-btn, button.run-both-btn {
+    font-family: "IBM Plex Sans", sans-serif; font-size: 12.5px; font-weight: 600;
+    border-radius: 6px; padding: 7px 12px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  button.run-both-btn {
+    background: var(--ink); color: var(--bg); border: 1px solid var(--ink);
+  }
+  button.run-both-btn:disabled { opacity: .5; cursor: default; }
+
+  .stat-tiles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 24px 0 8px;
+  }
+  @media (max-width: 620px) { .stat-tiles { grid-template-columns: 1fr; } }
+
+  .tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .tile .cond-label {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em;
+    margin-bottom: 10px;
+  }
+  .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+  .tile.vacuum .dot, .live-col.vacuum .dot { background: var(--vacuum); }
+  .tile.parity .dot, .live-col.parity .dot { background: var(--parity); }
+  .tile.vacuum .cond-label { color: var(--vacuum); }
+  .tile.parity .cond-label { color: var(--parity); }
+
+  .tile .headline { font-size: 26px; font-weight: 600; margin: 0 0 2px; }
+  .tile .sub { font-size: 13px; color: var(--ink-muted); }
+
+  section.cols, .live-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 22px;
+  }
+  @media (max-width: 760px) { section.cols, .live-cols { grid-template-columns: 1fr; } }
+
+  .colhead {
+    position: sticky; top: 0;
+    background: var(--bg);
+    padding-block: 4px 10px;
+    z-index: 2;
+  }
+  .colhead .name { font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+  .col.vacuum .colhead .name, .live-col.vacuum .colhead .name { color: var(--vacuum); }
+  .col.parity .colhead .name, .live-col.parity .colhead .name { color: var(--parity); }
+  .colhead .desc { font-size: 12.5px; color: var(--ink-muted); margin-top: 3px; }
+
+  .live-col .colhead { position: static; }
+  .live-controls { display: flex; align-items: center; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+  button.run-btn.vacuum { background: var(--vacuum-soft); color: var(--vacuum); border: 1px solid var(--vacuum); }
+  button.run-btn.parity { background: var(--parity-soft); color: var(--parity); border: 1px solid var(--parity); }
+  button.run-btn:disabled { opacity: .5; cursor: default; }
+  .tally { font-size: 12px; color: var(--ink-muted); font-family: "IBM Plex Mono", monospace; }
+  .live-stat { font-size: 12.5px; color: var(--ink-muted); margin-top: 8px; min-height: 1.4em; }
+  .live-stat b { color: var(--ink); }
+
+  .gauge-track {
+    height: 6px; border-radius: 4px; background: var(--surface-2);
+    overflow: hidden; margin-top: 10px; border: 1px solid var(--border);
+    position: relative;
+  }
+  .gauge-fill { height: 100%; border-radius: 4px; transition: width .25s ease; }
+  .col.vacuum .gauge-fill, .live-col.vacuum .gauge-fill { background: var(--vacuum); }
+  .col.parity .gauge-fill, .live-col.parity .gauge-fill { background: var(--parity); }
+  .gauge-threshold {
+    position: absolute; top: -2px; bottom: -2px; width: 1px; background: var(--critical); opacity: .55;
+  }
+
+  .pi-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+
+  .pi-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .pi-card.empty { opacity: .55; padding: 7px 12px; }
+  .pi-card.entering { animation: cardIn .32s ease both; }
+  @media (prefers-reduced-motion: reduce) { .pi-card.entering { animation: none; } }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .pi-top {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    font-size: 12.5px;
+  }
+  .pi-index { font-family: "IBM Plex Mono", monospace; color: var(--ink-faint); }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11.5px; font-weight: 600; letter-spacing: .01em;
+    padding: 2px 8px; border-radius: 999px;
+    white-space: nowrap;
+  }
+  .badge.good { color: var(--good); background: var(--good-soft); }
+  .badge.warning { color: var(--warning); background: var(--warning-soft); }
+  .badge.critical { color: var(--critical); background: var(--critical-soft); }
+  .badge.neutral { color: var(--ink-muted); background: var(--surface-2); }
+
+  .catastrophe-banner {
+    margin-top: 8px;
+    background: var(--surface-2);
+    color: var(--ink-faint);
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 11.5px;
+    font-weight: 500;
+    font-style: italic;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .moves { margin-top: 8px; display: flex; flex-direction: column; gap: 7px; }
+  .move { font-size: 12.5px; color: var(--ink); }
+  .move .sprint-tag { color: var(--ink-faint); font-family: "IBM Plex Mono", monospace; margin-right: 6px; }
+
+  .bidbar-wrap { margin-top: 4px; display: flex; flex-direction: column; gap: 3px; }
+  .bidrow { display: grid; grid-template-columns: 74px 1fr 52px; align-items: center; gap: 8px; font-size: 11px; }
+  .bidrow .lbl { color: var(--ink-muted); }
+  .bidrow .val { font-family: "IBM Plex Mono", monospace; text-align: right; }
+  .bidtrack { height: 8px; background: var(--surface-2); border-radius: 4px; overflow: hidden; border: 1px solid var(--border); }
+  .bidfill { height: 100%; border-radius: 4px; }
+  .bidfill.pm { background: var(--ink-faint); }
+  .bidfill.pm.win { background: var(--good); }
+  .bidfill.pm.lose { background: var(--critical); }
+  .bidfill.pdm { background: var(--ink-faint); opacity: .5; }
+
+  /* cascade (tiered escalation) */
+  .cascade-pi { padding: 12px 14px; }
+  .tier-row { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); }
+  .tier-row:first-of-type { margin-top: 10px; padding-top: 10px; }
+  .tier-label {
+    font-size: 11.5px; font-weight: 600; color: var(--ink-muted);
+    display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px;
+    text-transform: uppercase; letter-spacing: .03em;
+  }
+  .tier-label .tier-sub { font-weight: 400; text-transform: none; color: var(--ink-faint); letter-spacing: normal; font-size: 11px; }
+  .tier-row.gm-row .tier-label { color: var(--gm); }
+  .pod-items { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pod-chip {
+    font-size: 11.5px; font-weight: 500; padding: 3px 9px; border-radius: 999px;
+    white-space: nowrap; border: 1px solid transparent;
+  }
+  .pod-chip.neutral { color: var(--ink-faint); background: var(--surface-2); }
+  .pod-chip.good { color: var(--good); background: var(--good-soft); }
+  .pod-chip.warning { color: var(--warning); background: var(--warning-soft); }
+  .pod-chip.critical { color: var(--critical); background: var(--critical-soft); }
+  .pod-chip.gm { color: var(--gm); background: var(--gm-soft); font-weight: 600; }
+  .cascade-summary { display: flex; flex-wrap: wrap; gap: 10px 18px; margin: 10px 0 0; font-size: 12px; color: var(--ink-muted); }
+  .cascade-summary b { color: var(--ink); }
+
+  /* pod vertical slice — meeting transcript */
+  .condition-toggle { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .condition-toggle button {
+    font-family: "IBM Plex Sans", sans-serif; font-size: 12.5px; font-weight: 600;
+    padding: 8px 14px; background: var(--surface); color: var(--ink-muted); border: none; cursor: pointer;
+  }
+  .condition-toggle button + button { border-left: 1px solid var(--border); }
+  .condition-toggle button[aria-pressed="true"].vacuum { background: var(--vacuum-soft); color: var(--vacuum); }
+  .condition-toggle button[aria-pressed="true"].parity { background: var(--parity-soft); color: var(--parity); }
+  .slice-controls { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin: 16px 0 6px; }
+  .slice-summary { font-size: 12.5px; color: var(--ink-muted); }
+  .slice-summary b { color: var(--ink); }
+
+  .tier-block { margin-top: 30px; }
+  .tier-block:first-child { margin-top: 22px; }
+  .tier-heading {
+    font-size: 13.5px; font-weight: 600; margin: 0 0 4px;
+    display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;
+    border-bottom: 1px solid var(--border); padding-bottom: 8px;
+  }
+  .tier-heading .tier-attendees { font-weight: 400; font-size: 12px; color: var(--ink-faint); }
+  .tier-empty-note { font-size: 12.5px; color: var(--ink-faint); font-style: italic; margin: 10px 0; }
+
+  .issue-block { margin-top: 16px; padding: 12px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
+  .issue-topic {
+    font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .03em;
+    color: var(--ink-faint); margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
+  }
+  .transcript-line { display: flex; align-items: baseline; gap: 8px; margin-top: 6px; font-size: 13px; line-height: 1.45; }
+  .transcript-line.hidden-line { visibility: hidden; }
+  .role-tag {
+    flex: none; font-size: 10.5px; font-weight: 700; letter-spacing: .02em;
+    padding: 2px 7px; border-radius: 5px; font-family: "IBM Plex Mono", monospace;
+  }
+  .role-tag.prog { background: color-mix(in srgb, var(--r-prog) 16%, transparent); color: var(--r-prog); }
+  .role-tag.prod { background: color-mix(in srgb, var(--r-prod) 16%, transparent); color: var(--r-prod); }
+  .role-tag.eng { background: color-mix(in srgb, var(--r-eng) 16%, transparent); color: var(--r-eng); }
+  .role-tag.td { background: color-mix(in srgb, var(--r-td) 16%, transparent); color: var(--r-td); }
+  .role-tag.lead { background: color-mix(in srgb, var(--r-lead) 18%, transparent); color: var(--r-lead); }
+  .role-tag.gm { background: var(--gm-soft); color: var(--gm); }
+  .role-tag.pm { background: color-mix(in srgb, var(--r-prog) 16%, transparent); color: var(--r-prog); }
+  .transcript-line .line-text { color: var(--ink); }
+  .transcript-line.verdict { margin-top: 9px; padding-top: 8px; border-top: 1px dashed var(--border); }
+  .transcript-line.verdict .line-text { font-weight: 600; }
+  .transcript-line.verdict.aligned .line-text { color: var(--good); }
+  .transcript-line.verdict.escalated .line-text { color: var(--warning); }
+  .transcript-line.verdict.decided .line-text { color: var(--gm); }
+  .transcript-line.verdict.deferred .line-text { color: var(--critical); }
+  .transcript-line.entering { animation: lineIn .28s ease both; }
+  @media (prefers-reduced-motion: reduce) { .transcript-line.entering { animation: none; } }
+  @keyframes lineIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+  .slice-funnel { font-size: 11.5px; color: var(--ink-muted); margin-top: 4px; line-height: 1.5; }
+  .issue-block.featured { border-color: var(--focus); }
+  .journey-divider {
+    margin-top: 12px; padding-top: 8px; border-top: 1px solid var(--border);
+    font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .03em; color: var(--ink-faint);
+  }
+  .slice-collapsed { margin-top: 16px; font-size: 12.5px; }
+  .slice-collapsed summary { cursor: pointer; color: var(--ink-muted); font-weight: 500; padding: 6px 0; }
+  .slice-collapsed summary:hover { color: var(--ink); }
+  .collapsed-list { margin-top: 6px; display: flex; flex-direction: column; gap: 4px; }
+  .collapsed-row {
+    display: flex; justify-content: space-between; gap: 10px; padding: 5px 10px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 6px; font-size: 12px;
+  }
+  .collapsed-topic { color: var(--ink-muted); }
+  .collapsed-outcome { color: var(--ink-faint); font-family: "IBM Plex Mono", monospace; text-align: right; white-space: nowrap; }
+
+  .backlog-line {
+    margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border);
+    font-size: 11.5px; color: var(--ink-muted);
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  }
+  .backlog-line .delta.good { color: var(--good); }
+  .backlog-line .delta.critical { color: var(--critical); }
+  .backlog-line .delta.warning { color: var(--warning); }
+  .backlog-line .val { font-family: "IBM Plex Mono", monospace; }
+
+  footer.compare {
+    margin-top: 40px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  footer.compare h2 { font-size: 15px; margin: 0 0 14px; font-weight: 600; }
+  table.finals { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.finals th, table.finals td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--border); }
+  table.finals th { color: var(--ink-muted); font-weight: 500; font-size: 12px; }
+  table.finals td.mono { font-family: "IBM Plex Mono", monospace; }
+  table.finals th.vacuum, table.finals td.vacuum-col { color: var(--vacuum); }
+  table.finals th.parity, table.finals td.parity-col { color: var(--parity); }
+  .finals-note { font-size: 12.5px; color: var(--ink-muted); margin: 14px 0 0; line-height: 1.5; max-width: 62ch; }
+
+  ::selection { background: var(--focus); color: white; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+</style>
+
+<div class="wrap">
+  <header class="intro">
+    <p class="eyebrow">Rule-Based Organizational Simulation &middot; H-005 Methodology Demo &middot; Engine v0.8</p>
+    <h1>Same disagreements. One structural difference.</h1>
+    <p class="lede">
+      Every Program Increment below starts with the same kind of ambiguity: an issue Program and
+      Product read differently. What changes between columns is Program&rsquo;s standing to contest
+      it &mdash; under Parity, it negotiates at full strength and holds a limited mandate; under
+      Vacuum, it can still negotiate, just from a discounted position, and has no mandate at all.
+    </p>
+  </header>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" id="tab-live" role="tab" aria-selected="true">Live</button>
+    <button class="tab" id="tab-recorded" role="tab" aria-selected="false">Recorded run (seed 3)</button>
+    <button class="tab" id="tab-cascade" role="tab" aria-selected="false">Escalation cascade</button>
+    <button class="tab" id="tab-slice" role="tab" aria-selected="false">Pod vertical slice</button>
+  </div>
+
+  <section id="panel-live" class="panel">
+    <p class="panel-note">
+      This runs the same rules as the published engine &mdash; reimplemented in JavaScript so it can
+      compute live in your browser. Each run draws fresh randomness (not the recorded seed on the
+      other tab), so run it a few times and watch the pattern, not any single story.
+    </p>
+    <div class="run-both-row">
+      <button class="run-both-btn" id="run-both">&#9654; Run both, 12 PIs each</button>
+    </div>
+
+    <div class="live-cols">
+      <div class="live-col vacuum">
+        <div class="colhead">
+          <div class="name"><span class="dot"></span>Vacuum &mdash; rank gap, no mandate</div>
+          <div class="desc">Program can still contest Product through negotiation, but its bids are discounted for the rank gap, and it has no mandate path. Every contested call it loses becomes a guess.</div>
+          <div class="live-controls">
+            <button class="run-btn vacuum" id="run-vacuum">&#9654; Run 12 PIs</button>
+            <span class="tally mono" id="tally-vacuum">0 runs</span>
+          </div>
+          <div class="live-stat" id="stat-vacuum"></div>
+          <div class="gauge-track"><span class="gauge-fill" id="gauge-vacuum-live" style="width:0"></span></div>
+        </div>
+        <div class="pi-list" id="col-vacuum-live"></div>
+      </div>
+      <div class="live-col parity">
+        <div class="colhead">
+          <div class="name"><span class="dot"></span>Parity &mdash; no rank gap, capped mandate</div>
+          <div class="desc">Program holds a limited, reviewable mandate it can invoke once per PI.</div>
+          <div class="live-controls">
+            <button class="run-btn parity" id="run-parity">&#9654; Run 12 PIs</button>
+            <span class="tally mono" id="tally-parity">0 runs</span>
+          </div>
+          <div class="live-stat" id="stat-parity"></div>
+          <div class="gauge-track"><span class="gauge-fill" id="gauge-parity-live" style="width:0"></span></div>
+        </div>
+        <div class="pi-list" id="col-parity-live"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="panel-recorded" class="panel" hidden>
+    <p class="panel-note">
+      One specific run of the real Python engine, captured and fixed so it can be pointed to and
+      cited. Both columns share an identical random seed, so every ambiguous decision that comes up
+      is exactly the same in both &mdash; only the structural condition differs.
+    </p>
+    <p class="provenance mono">
+      <span>seed=<span id="seed-val">&mdash;</span></span>
+      <span>engine=enterprise_sim_engine_v0_8.py</span>
+      <span>k_pis=12</span>
+      <span><a href="https://github.com/mlescault/enterprise-ai-evaluation" target="_blank" rel="noopener">source repo →</a></span>
+    </p>
+
+    <div class="stat-tiles" id="stat-tiles"></div>
+    <section class="cols" id="cols"></section>
+    <footer class="compare" id="compare"></footer>
+  </section>
+
+  <section id="panel-cascade" class="panel" hidden>
+    <p class="panel-note">
+      The other two tabs both show the same thing: a single flat PM&ndash;vs&ndash;PdM call, once per PI.
+      That&rsquo;s literally all the published v0.8 engine models &mdash; it has no pods, no directors,
+      no GM. This tab is a new extension, built for this demo, that runs the actual cadence the org
+      chart implies: <b>Pod Sync</b> (the 3&ndash;4 pod leaders) &rarr; <b>Sprint Review</b>
+      (director/VP) &rarr; <b>Pre-GM</b> (staging &amp; triage) &rarr; <b>GM meeting</b>, which should
+      mostly just be informed &mdash; and only spend its own time on whatever is still genuinely
+      unresolved. It reuses v0.8&rsquo;s real bid/mandate/backlog formulas at every tier (same ranges,
+      same rank-gap discount, same backlog math) &mdash; it just applies them across three pods and
+      four meetings instead of one flat comparison. It is not part of the published repo.
+    </p>
+    <div class="run-both-row">
+      <button class="run-both-btn" id="run-both-cascade">&#9654; Run both, 12 PIs each</button>
+    </div>
+
+    <div class="live-cols">
+      <div class="live-col vacuum">
+        <div class="colhead">
+          <div class="name"><span class="dot"></span>Vacuum &mdash; rank gap, no mandate</div>
+          <div class="desc">Each pod&rsquo;s Program lead has no mandate, and its negotiation bids are discounted for the rank gap, so most contested items can&rsquo;t be closed at Pod Sync &mdash; watch how far up the chain they end up traveling.</div>
+          <div class="live-controls">
+            <button class="run-btn vacuum" id="run-vacuum-cascade">&#9654; Run 12 PIs</button>
+            <span class="tally mono" id="tally-vacuum-cascade">0 runs</span>
+          </div>
+          <div class="cascade-summary mono" id="stat-vacuum-cascade"></div>
+          <div class="gauge-track"><span class="gauge-fill" id="gauge-vacuum-cascade" style="width:0"></span></div>
+        </div>
+        <div class="pi-list" id="col-vacuum-cascade"></div>
+      </div>
+      <div class="live-col parity">
+        <div class="colhead">
+          <div class="name"><span class="dot"></span>Parity &mdash; no rank gap, capped mandate</div>
+          <div class="desc">Each pod&rsquo;s Program lead holds a real, capped mandate &mdash; most items close at Pod Sync, and the GM meeting stays mostly informational, the way it&rsquo;s supposed to.</div>
+          <div class="live-controls">
+            <button class="run-btn parity" id="run-parity-cascade">&#9654; Run 12 PIs</button>
+            <span class="tally mono" id="tally-parity-cascade">0 runs</span>
+          </div>
+          <div class="cascade-summary mono" id="stat-parity-cascade"></div>
+          <div class="gauge-track"><span class="gauge-fill" id="gauge-parity-cascade" style="width:0"></span></div>
+        </div>
+        <div class="pi-list" id="col-parity-cascade"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="panel-slice" class="panel" hidden>
+    <p class="panel-note">
+      One pod, thirteen sprint-goal issues, one meeting cycle, both regimes on the identical set of
+      random draws &mdash; same idea as Recorded, just for the tier structure instead of the flat
+      comparison. All thirteen issues are computed for real, every time: whether an issue aligns or
+      escalates, how Program spends a capped mandate, and how far up the chain something travels
+      before anyone has standing to close it. Two issues are voiced in full below &mdash; the one that
+      structurally can&rsquo;t be resolved at any pod level, and the highest-stakes issue that Program
+      actually loses under Vacuum &mdash; because reading all thirteen arguments to find the pattern
+      defeats the point of a demo. The other eleven are real, computed, and summarized, not hidden.
+    </p>
+    <p class="provenance mono">
+      <span>seed=<span id="slice-seed-val">&mdash;</span></span>
+      <span>13 issues</span>
+      <span>both regimes, identical draws</span>
+    </p>
+    <div class="run-both-row">
+      <button class="run-both-btn" id="slice-reshuffle">&#8635; Reshuffle (fresh random run)</button>
+    </div>
+
+    <div class="live-cols">
+      <div class="live-col vacuum">
+        <div class="colhead">
+          <div class="name"><span class="dot"></span>Vacuum &mdash; rank gap, no mandate</div>
+          <div class="slice-funnel mono" id="funnel-vacuum"></div>
+        </div>
+        <div id="slice-vacuum-body"></div>
+      </div>
+      <div class="live-col parity">
+        <div class="colhead">
+          <div class="name"><span class="dot"></span>Parity &mdash; no rank gap, capped mandate</div>
+          <div class="slice-funnel mono" id="funnel-parity"></div>
+        </div>
+        <div id="slice-parity-body"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script type="application/json" id="trace-data">{
+  "vacuum_seed_used": 3,
+  "vacuum": {
+    "engine_version": "0.8",
+    "condition": "vacuum: gap=True x mandate=none",
+    "structural_rank_gap": true,
+    "pm_mandate_access": "none",
+    "principal_seat_vacant": true,
+    "base_seed": 3,
+    "k_pis": 12,
+    "final_catastrophic": true,
+    "first_catastrophe_pi": 10,
+    "final_reviewable_backlog": 0.0,
+    "final_unreviewable_backlog": 120.0,
+    "total_guesses": 8,
+    "total_forced": 0,
+    "total_misses": 4,
+    "events": [
+      {
+        "pi_index": 1,
+        "has_event": false,
+        "internal_disagreement": false,
+        "true_value": "B",
+        "signal_value": "B",
+        "signal_sprint": 99,
+        "finalize_sprint": 1,
+        "sprints": [],
+        "outcome": "no_ambiguity_this_pi"
+      },
+      {
+        "pi_index": 2,
+        "has_event": true,
+        "internal_disagreement": true,
+        "true_value": "B",
+        "signal_value": "B",
+        "signal_sprint": 5,
+        "finalize_sprint": 6,
+        "sprints": [
+          {
+            "sprint": 1,
+            "roll": 0.6056,
+            "action": "guess",
+            "guess_value": "B"
+          }
+        ],
+        "outcome": "guessed_correct",
+        "reviewable_backlog_after": 0.0,
+        "unreviewable_backlog_after": 0.0
+      },
+      {
+        "pi_index": 3,
+        "has_event": false,
+        "internal_disagreement": false,
+        "true_value": "B",
+        "signal_value": "B",
+        "signal_sprint": 99,
+        "finalize_sprint": 1,
+        "sprints": [],
+        "outcome": "no_ambiguity_this_pi"
+      },
+      {
+        "pi_index": 4,
+        "has_event": false,
+        "internal_disagreement": false,
+        "true_value": "B",
+        "signal_value": "B",
+        "signal_sprint": 99,
+        "finalize_sprint": 1,
+        "sprints": [],
+        "outcome": "no_ambiguity_this_pi"
+      },
+      {
+        "pi_index": 5,
+        "has_event": true,
+        "internal_disagreement": true,
+        "true_value": "B",
+        "signal_value": "B",
+        "signal_sprint": 5,
+        "finalize_sprint": 6,
+        "sprints": [
+          {
+            "sprint": 1,
+            "roll": 0.2319,
+            "action": "escalate_negotiation",
+            "raw_bid": 1.61,
+            "structural_rank_gap": true,
+            "rank_gap_discount": 0.6,
+            "tenure_bonus": 0.25,
+            "effective_bid": 1.21,
+            "defense_bid": 3.85,
+            "success": false,
+            "tier2_remaining_after": 4.39
+          },
+          {
+            "sprint": 2,
+            "roll": 0.3899,
+            "action": "guess",
+            "guess_value": "A"
+          }
+        ],
+        "outcome": "guessed_WRONG",
+        "backlog_type": "unreviewable (principal seat vacant -- never pays down)",
+        "reviewable_backlog_after": 0.0,
+        "unreviewable_backlog_after": 30.0
+      },
+      {
+        "pi_index": 6,
+        "has_event": true,
+        "internal_disagreement": true,
+        "true_value": "B",
+        "signal_value": "B",
+        "signal_sprint": 5,
+        "finalize_sprint": 6,
+        "sprints": [
+          {
+            "sprint": 1,
+            "roll": 0.8236,
+            "action": "wait"
+          },
+          {
+            "sprint": 2,
+            "roll": 0.2694,
+            "action": "escalate_negotiation",
+            "raw_bid": 3.38,
+            "structural_rank_gap": true,
+            "rank_gap_discount": 0.6,
+            "tenure_bonus": 0.3,
+            "effective_bid": 2.33,
+            "defense_bid": 3.84,
+            "success": false,
+            "tier2_remaining_after": 2.62
+          },
+          {
+            "sprint": 3,
+            "roll": 0.3876,
+            "action": "guess",
+            "guess_value": "B"
+          }
+        ],
+        "outcome": "guessed_correct",
+        "reviewable_backlog_after": 0.0,
+        "unreviewable_backlog_after": 30.0
+      },
+      {
+        "pi_index": 7,
+        "has_event": true,
+        "internal_disagreement": false,
+        "true_value": "B",
+        "signal_value": "B",
+        "signal_sprint": 1,
+        "finalize_sprint": 3,
+        "sprints": [
+          {
+            "sprint": 1,
+            "roll": 0.9641,
+            "action": "wait"
+          },
+          {
+            "sprint": 2,
+            "roll": 0.1341,
+            "action": "escalate_negotiation",
+            "raw_bid": 2.46,
+            "structural_rank_gap": true,
+            "rank_gap_discount": 0.6,
+            "tenure_bonus": 0.35,
+            "effective_bid": 1.83,
+            "defense_bid": 2.07,
+            "success": false,
+            "tier2_remaining_after": 3.54
+          }
+        ],
+        "outcome": "resolved_without_escalation_or_guess",
+        "reviewable_backlog_after": 0.0,
+        "unreviewable_backlog_after": 30.0
+      },
+      {
+        "pi_index": 8,
+        "has_event": true,
+        "internal_disagreement": true,
+        "true_value": "B",
+        "signal_value": "B",
+        "signal_sprint": 5,
+        "finalize_sprint": 6,
+        "sprints": [
+          {
+            "sprint": 1,
+            "roll": 0.4211,
+            "action": "guess",
+            "guess_value": "B"
+          }
+        ],
+        "outcome": "guessed_correct",
+        "reviewable_backlog_after": 0.0,
+        "unreviewable_backlog_after": 30.0
+      },
+      {
+        "pi_index": 9,
+        "has_event": true,
+        "internal_disagreement": true,
+        "true_value": "B",
+        "signal_value": "A",
+        "signal_sprint": 4,
+        "finalize_sprint": 6,
+        "sprints": [
+          {
+            "sprint": 1,
+            "roll": 0.682,
+            "action": "wait"
+          },
+          {
+            "sprint": 2,
+            "roll": 0.9289,
+            "action": "wait"
+          },
+          {
+            "sprint": 3,
+            "roll": 0.8564,
+            "action": "guess",
+            "guess_value": "A"
+          }
+        ],
+        "outcome": "guessed_WRONG",
+        "backlog_type": "unreviewable (principal seat vacant -- never pays down)",
+        "reviewable_backlog_after": 0.0,
+        "unreviewable_backlog_after": 60.0
+      },
+      {
+        "pi_index": 10,
+        "has_event": true,
+        "internal_disagreement": true,
+        "true_value": "B",
+        "signal_value": "A",
+        "signal_sprint": 5,
+        "finalize_sprint": 6,
+        "sprints": [
+          {
+            "sprint": 1,
+            "roll": 0.7138,
+            "action": "wait"
+          },
+          {
+            "sprint": 2,
+            "roll": 0.2111,
+            "action": "escalate_negotiation",
+            "raw_bid": 4.33,
+            "structural_rank_gap": true,
+            "rank_gap_discount": 0.6,
+            "tenure_bonus": 0.5,
+            "effective_bid": 3.1,
+            "defense_bid": 3.15,
+            "success": false,
+            "tier2_remaining_after": 1.67
+          },
+          {
+            "sprint": 3,
+            "roll": 0.285,
+            "action": "escalate_negotiation",
+            "raw_bid": 1.25,
+            "structural_rank_gap": true,
+            "rank_gap_discount": 0.6,
+            "tenure_bonus": 0.5,
+            "effective_bid": 1.25,
+            "defense_bid": 3.71,
+            "success": false,
+            "tier2_remaining_after": 0.42
+          },
+          {
+            "sprint": 4,
+            "roll": 0.9898,
+            "action": "guess",
+            "guess_value": "A"
+          }
+        ],
+        "outcome": "guessed_WRONG",
+        "backlog_type": "unreviewable (principal seat vacant -- never pays down)",
+        "catastrophe_triggered_here": true,
+        "reviewable_backlog_after": 0.0,
+        "unreviewable_backlog_after": 90.0
+      },
+      {
+        "pi_index": 11,
+        "has_event": true,
+        "internal_disagreement": true,
+        "true_value": "B",
+        "signal_value": "B",
+        "signal_sprint": 3,
+        "finalize_sprint": 6,
+        "sprints": [
+          {
+            "sprint": 1,
+            "roll": 0.7688,
+            "action": "wait"
+          },
+          {
+            "sprint": 2,
+            "roll": 0.8728,
+            "action": "guess",
+            "guess_value": "A"
+          }
+        ],
+        "outcome": "guessed_WRONG",
+        "backlog_type": "unreviewable (principal seat vacant -- never pays down)",
+        "reviewable_backlog_after": 0.0,
+        "unreviewable_backlog_after": 120.0
+      },
+      {
+        "pi_index": 12,
+        "has_event": true,
+        "internal_disagreement": false,
+        "true_value": "B",
+        "signal_value": "B",
+        "signal_sprint": 1,
+        "finalize_sprint": 3,
+        "sprints": [
+          {
+            "sprint": 1,
+            "roll": 0.7184,
+            "action": "guess",
+            "guess_value": "B"
+          }
+        ],
+        "outcome": "guessed_correct",
+        "reviewable_backlog_after": 0.0,
+        "unreviewable_backlog_after": 120.0
+      }
+    ]
+  },
+  "parity_same_seed": {
+    "engine_version": "0.8",
+    "condition": "parity: gap=False x mandate=full_capped",
+    "structural_rank_gap": false,
+    "pm_mandate_access": "full_capped",
+    "principal_seat_vacant": false,
+    "base_seed": 3,
+    "k_pis": 12,
+    "final_catastrophic": false,
+    "first_catastrophe_pi": null,
+    "final_reviewable_backlog": 14.16,
+    "final_unreviewable_backlog": 0.0,
+    "total_guesses": 5,
+    "total_forced": 3,
+    "total_misses": 2,
+    "events": [
+      {
+        "pi_index": 1,
+        "has_event": false,
+        "internal_disagreement": false,
+        "true_value": "B",
+        "signal_value": "B",
+        "signal_sprint": 99,
+        "finalize_sprint": 1,
+        "sprints": [],
+        "outcome": "no_ambiguity_this_pi"
+      },
+      {
+        "pi_index": 2,
+        "has_event": true,
+        "internal_disagreement": true,
+        "true_value": "B",
+        "signal_value": "B",
+        "signal_sprint": 5,
+        "finalize_sprint": 6,
+        "sprints": [
+          {
+            "sprint": 1,
+            "roll": 0.6056,
+            "action": "guess",
+            "guess_value": "B"
+          }
+        ],
+        "outcome": "guessed_correct",
+        "reviewable_backlog_after": 0.0,
+        "unreviewable_backlog_after": 0.0
+      },
+      {
+        "pi_index": 3,
+        "has_event": false,
+        "internal_disagreement": false,
+        "true_value": "B",
+        "signal_value": "B",
+        "signal_sprint": 99,
+        "finalize_sprint": 1,
+        "sprints": [],
+        "outcome": "no_ambiguity_this_pi"
+      },
+      {
+        "pi_index": 4,
+        "has_event": false,
+        "internal_disagreement": false,
+        "true_value": "B",
+        "signal_value": "B",
+        "signal_sprint": 99,
+        "finalize_sprint": 1,
+        "sprints": [],
+        "outcome": "no_ambiguity_this_pi"
+      },
+      {
+        "pi_index": 5,
+        "has_event": true,
+        "internal_disagreement": true,
+        "true_value": "B",
+        "signal_value": "B",
+        "signal_sprint": 5,
+        "finalize_sprint": 6,
+        "sprints": [
+          {
+            "sprint": 1,
+            "roll": 0.2319,
+            "action": "escalate_mandate",
+            "success": true,
+            "cost": 0.0,
+            "tier2_remaining_after": 6.0,
+            "forced_value": "A"
+          }
+        ],
+        "outcome": "forced_via_mandate_WRONG",
+        "reviewable_backlog_after": 30.0,
+        "unreviewable_backlog_after": 0.0
+      },
+      {
+        "pi_index": 6,
+        "has_event": true,
+        "internal_disagreement": true,
+        "true_value": "B",
+        "signal_value": "B",
+        "signal_sprint": 5,
+        "finalize_sprint": 6,
+        "sprints": [
+          {
+            "sprint": 1,
+            "roll": 0.1594,
+            "action": "escalate_mandate",
+            "success": true,
+            "cost": 0.0,
+            "tier2_remaining_after": 6.0,
+            "forced_value": "A"
+          }
+        ],
+        "outcome": "forced_via_mandate_WRONG",
+        "reviewable_backlog_after": 54.0,
+        "unreviewable_backlog_after": 0.0
+      },
+      {
+        "pi_index": 7,
+        "has_event": true,
+        "internal_disagreement": true,
+        "true_value": "B",
+        "signal_value": "B",
+        "signal_sprint": 4,
+        "finalize_sprint": 6,
+        "sprints": [
+          {
+            "sprint": 1,
+            "roll": 0.9202,
+            "action": "wait"
+          },
+          {
+            "sprint": 2,
+            "roll": 0.3876,
+            "action": "guess",
+            "guess_value": "B"
+          }
+        ],
+        "outcome": "guessed_correct",
+        "reviewable_backlog_after": 43.2,
+        "unreviewable_backlog_after": 0.0
+      },
+      {
+        "pi_index": 8,
+        "has_event": true,
+        "internal_disagreement": false,
+        "true_value": "B",
+        "signal_value": "B",
+        "signal_sprint": 1,
+        "finalize_sprint": 3,
+        "sprints": [
+          {
+            "sprint": 1,
+            "roll": 0.9641,
+            "action": "wait"
+          },
+          {
+            "sprint": 2,
+            "roll": 0.1341,
+            "action": "escalate_mandate",
+            "success": true,
+            "cost": 0.0,
+            "tier2_remaining_after": 6.0,
+            "forced_value": "B"
+          }
+        ],
+        "outcome": "forced_via_mandate_correct",
+        "reviewable_backlog_after": 34.56,
+        "unreviewable_backlog_after": 0.0
+      },
+      {
+        "pi_index": 9,
+        "has_event": true,
+        "internal_disagreement": true,
+        "true_value": "B",
+        "signal_value": "B",
+        "signal_sprint": 4,
+        "finalize_sprint": 6,
+        "sprints": [
+          {
+            "sprint": 1,
+            "roll": 0.4362,
+            "action": "guess",
+            "guess_value": "B"
+          }
+        ],
+        "outcome": "guessed_correct",
+        "reviewable_backlog_after": 27.65,
+        "unreviewable_backlog_after": 0.0
+      },
+      {
+        "pi_index": 10,
+        "has_event": true,
+        "internal_disagreement": false,
+        "true_value": "B",
+        "signal_value": "B",
+        "signal_sprint": 1,
+        "finalize_sprint": 4,
+        "sprints": [
+          {
+            "sprint": 1,
+            "roll": 0.3509,
+            "action": "guess",
+            "guess_value": "B"
+          }
+        ],
+        "outcome": "guessed_correct",
+        "reviewable_backlog_after": 22.12,
+        "unreviewable_backlog_after": 0.0
+      },
+      {
+        "pi_index": 11,
+        "has_event": true,
+        "internal_disagreement": false,
+        "true_value": "B",
+        "signal_value": "B",
+        "signal_sprint": 1,
+        "finalize_sprint": 3,
+        "sprints": [
+          {
+            "sprint": 1,
+            "roll": 0.682,
+            "action": "wait"
+          },
+          {
+            "sprint": 2,
+            "roll": 0.9289,
+            "action": "wait"
+          }
+        ],
+        "outcome": "resolved_without_escalation_or_guess",
+        "reviewable_backlog_after": 17.69,
+        "unreviewable_backlog_after": 0.0
+      },
+      {
+        "pi_index": 12,
+        "has_event": true,
+        "internal_disagreement": false,
+        "true_value": "B",
+        "signal_value": "B",
+        "signal_sprint": 1,
+        "finalize_sprint": 4,
+        "sprints": [
+          {
+            "sprint": 1,
+            "roll": 0.6956,
+            "action": "wait"
+          },
+          {
+            "sprint": 2,
+            "roll": 0.6986,
+            "action": "guess",
+            "guess_value": "B"
+          }
+        ],
+        "outcome": "guessed_correct",
+        "reviewable_backlog_after": 14.16,
+        "unreviewable_backlog_after": 0.0
+      }
+    ]
+  }
+}</script>
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- shared constants (mirror enterprise_sim_engine_v0_8.py) ---------- */
+  const ENGINE = {
+    N_SPRINTS: 6,
+    FULL_PI_CAPACITY: 600,
+    GUESS_EFFORT: 30,
+    CATASTROPHE_MIN_GAP_SPRINTS: 1,
+    CATASTROPHE_MIN_CAPACITY_FRACTION: 0.15,
+    REWORK_INVALIDATION_FRACTION: 1.0,
+    TIER2_POOL_PER_PI: 6,
+    PAYDOWN_RATE: 0.20,
+    UNREVIEWABLE_PAYDOWN_RATE: 0.0,
+    BELIEF_MISMATCH_THRESHOLD: 3,
+    BELIEF_GUESS_PROB_BUMP: 0.20,
+    BELIEF_ESCALATE_PROB_MULT: 0.70,
+    TENURE_BONUS_PER_PI: 0.05,
+    TENURE_BONUS_CAP: 1.0,
+    MANDATE_USES_PER_PI: 1,
+    PM_BID_RANGE: [1.0, 5.0],
+    PDM_DEFENSE_RANGE: [2.0, 4.0],
+    RANK_GAP_BID_DISCOUNT: 0.6,
+    P_NO_AMBIGUITY_THIS_PI: 0.30,
+    P_DISAGREEMENT_GIVEN_AMBIGUITY: 0.55,
+  };
+  // CATASTROPHE_MIN_GAP_SPRINTS / CATASTROPHE_MIN_CAPACITY_FRACTION above are kept only
+  // because they're real fields on the historical v0.8 trace loaded into the Recorded tab
+  // (data.vacuum.final_catastrophic etc, captured by the actual Python engine run). Live
+  // and Cascade compute everything else fresh in JS, but deliberately do NOT recompute a
+  // catastrophic/first_catastrophe_pi threshold — the repo's own audit found that
+  // comparative metric invalid, so this demo doesn't manufacture new instances of it.
+  const LIVE_GAUGE_MAX = 150;
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const fmt1 = (n) => (Math.round(n * 10) / 10).toString();
+  const round2 = (n) => Math.round(n * 100) / 100;
+  const round3 = (n) => Math.round(n * 1000) / 1000;
+
+  /* ---------- shared render helpers (used by both Live and Recorded panels) ---------- */
+
+  function statusFor(outcome) {
+    if (!outcome) return 'neutral';
+    if (outcome.indexOf('WRONG') !== -1) return 'critical';
+    if (outcome.indexOf('correct') !== -1) return 'good';
+    return 'neutral';
+  }
+
+  function outcomeLabel(pi) {
+    const map = {
+      'no_ambiguity_this_pi': 'No ambiguity this PI',
+      'guessed_correct': 'Guessed — correct',
+      'guessed_WRONG': 'Guessed — wrong',
+      'forced_via_mandate_correct': 'Mandate invoked — correct',
+      'forced_via_mandate_WRONG': 'Mandate invoked — wrong',
+      'forced_via_negotiation_correct': 'Won negotiation — correct',
+      'forced_via_negotiation_WRONG': 'Won negotiation — wrong',
+      'resolved_without_escalation_or_guess': 'Contested, then time ran out',
+    };
+    return map[pi.outcome] || pi.outcome;
+  }
+
+  function bidRow(label, value, max, kind) {
+    const pct = Math.max(4, Math.min(100, (value / max) * 100));
+    const cls = kind === 'pdm' ? 'bidfill pdm' : ('bidfill pm ' + kind);
+    return '<div class="bidrow"><span class="lbl">' + label + '</span>' +
+      '<span class="bidtrack"><span class="' + cls + '" style="width:' + pct + '%"></span></span>' +
+      '<span class="val">' + fmt1(value) + '</span></div>';
+  }
+
+  function renderMove(s) {
+    if (s.action === 'escalate_mandate') {
+      return '<div class="move"><span class="sprint-tag">S' + s.sprint + '</span>' +
+        'Program invokes its mandate &mdash; uncontested, forces value <b>' + s.forced_value + '</b></div>';
+    }
+    if (s.action === 'escalate_negotiation' || s.action === 'escalate_negotiation_no_budget') {
+      const win = s.success === true;
+      if (s.action === 'escalate_negotiation_no_budget') {
+        return '<div class="move"><span class="sprint-tag">S' + s.sprint + '</span>' +
+          'Program tries to contest &mdash; out of negotiation budget this PI</div>';
+      }
+      let out = '<div class="move"><span class="sprint-tag">S' + s.sprint + '</span>' +
+        'Program contests Product&rsquo;s position' +
+        (s.structural_rank_gap ? ' (bid discounted ' + s.rank_gap_discount + '× &mdash; rank gap)' : '') +
+        (s.tenure_bonus ? ' +' + s.tenure_bonus + ' tenure' : '') +
+        ' — <b>' + (win ? 'wins' : 'loses') + '</b></div>';
+      out += '<div class="bidbar-wrap">';
+      out += bidRow('Program', s.effective_bid, 5, win ? 'win' : 'lose');
+      out += bidRow('Product', s.defense_bid, 5, 'pdm');
+      out += '</div>';
+      return out;
+    }
+    if (s.action === 'guess') {
+      return '<div class="move"><span class="sprint-tag">S' + s.sprint + '</span>' +
+        'No one escalates &mdash; Program guesses &ldquo;' + s.guess_value + '&rdquo;</div>';
+    }
+    return '';
+  }
+
+  function backlogDelta(before, pi) {
+    const after = pi.reviewable_backlog_after + pi.unreviewable_backlog_after;
+    const delta = after - before;
+    if (Math.abs(delta) < 0.05) return { text: 'backlog unchanged', cls: 'good', after };
+    if (pi.backlog_type && pi.backlog_type.indexOf('unreviewable') === 0) {
+      return { text: '+' + fmt1(delta) + ' unreviewable backlog (never pays down)', cls: 'critical', after };
+    }
+    if (pi.outcome && pi.outcome.indexOf('WRONG') !== -1) {
+      return { text: '+' + fmt1(delta) + ' backlog (reviewable)', cls: 'warning', after };
+    }
+    return { text: fmt1(delta) + ' backlog', cls: 'good', after };
+  }
+
+  function buildPiCardHtml(pi, runningBefore, showCatastropheHistory) {
+    if (!pi.has_event) {
+      return {
+        html: '<div class="pi-card empty"><div class="pi-top"><span class="pi-index">PI ' +
+          String(pi.pi_index).padStart(2, '0') + '</span><span class="badge neutral">No ambiguity</span></div></div>',
+        after: runningBefore,
+      };
+    }
+    const st = statusFor(pi.outcome);
+    const bl = backlogDelta(runningBefore, pi);
+    let movesHtml = '';
+    (pi.sprints || []).forEach(function (s) {
+      if (s.action === 'wait') return;
+      movesHtml += renderMove(s);
+    });
+    const html = '<div class="pi-card">' +
+      '<div class="pi-top"><span class="pi-index">PI ' + String(pi.pi_index).padStart(2, '0') + '</span>' +
+      '<span class="badge ' + st + '">' + outcomeLabel(pi) + '</span></div>' +
+      (movesHtml ? '<div class="moves">' + movesHtml + '</div>' : '') +
+      (pi.catastrophe_triggered_here && showCatastropheHistory ? '<div class="catastrophe-banner">Backlog crossed the retired catastrophe threshold here &mdash; historical marker, not a reportable finding</div>' : '') +
+      '<div class="backlog-line"><span>' +
+        '<span class="delta ' + bl.cls + '">' + bl.text + '</span></span>' +
+        '<span class="val">total ' + fmt1(bl.after) + '</span></div>' +
+      '</div>';
+    return { html: html, after: bl.after };
+  }
+
+  /* ================= RECORDED PANEL (fixed, real, captured Python run) ================= */
+
+  const data = JSON.parse(document.getElementById('trace-data').textContent);
+  const recVacuum = data.vacuum, recParity = data.parity_same_seed;
+  document.getElementById('seed-val').textContent = data.vacuum_seed_used;
+
+  function renderRecordedColumn(key, run, maxBacklog) {
+    const el = document.getElementById('col-' + key);
+    let running = 0;
+    let html = '';
+    run.events.forEach(function (pi) {
+      const r = buildPiCardHtml(pi, running, true);
+      html += r.html;
+      running = r.after;
+    });
+    el.innerHTML = html;
+    document.getElementById('gauge-' + key).style.width = Math.min(100, (running / maxBacklog) * 100) + '%';
+  }
+
+  const recMaxBacklog = Math.max(
+    recVacuum.final_reviewable_backlog + recVacuum.final_unreviewable_backlog,
+    recParity.final_reviewable_backlog + recParity.final_unreviewable_backlog,
+    1
+  );
+
+  document.getElementById('cols').innerHTML =
+    '<div class="col vacuum">' +
+      '<div class="colhead"><div class="name"><span class="dot"></span>Vacuum &mdash; rank gap, no mandate</div>' +
+      '<div class="gauge-track"><span class="gauge-fill" id="gauge-vacuum" style="width:0"></span></div></div>' +
+      '<div class="pi-list" id="col-vacuum"></div></div>' +
+    '<div class="col parity">' +
+      '<div class="colhead"><div class="name"><span class="dot"></span>Parity &mdash; no rank gap, capped mandate</div>' +
+      '<div class="gauge-track"><span class="gauge-fill" id="gauge-parity" style="width:0"></span></div></div>' +
+      '<div class="pi-list" id="col-parity"></div></div>';
+
+  renderRecordedColumn('vacuum', recVacuum, recMaxBacklog);
+  renderRecordedColumn('parity', recParity, recMaxBacklog);
+
+  document.getElementById('stat-tiles').innerHTML =
+    '<div class="tile vacuum"><div class="cond-label"><span class="dot"></span>Vacuum</div>' +
+      '<p class="headline mono">' + recVacuum.total_guesses + ' guesses, ' + recVacuum.total_forced + ' forced, ' + recVacuum.total_misses + ' wrong</p>' +
+      '<p class="sub">' + fmt1(recVacuum.final_unreviewable_backlog) + ' pts of backlog stuck permanently unreviewable of 12 PIs</p></div>' +
+    '<div class="tile parity"><div class="cond-label"><span class="dot"></span>Parity</div>' +
+      '<p class="headline mono">' + recParity.total_guesses + ' guesses, ' + recParity.total_forced + ' forced, ' + recParity.total_misses + ' wrong</p>' +
+      '<p class="sub">' + fmt1(recParity.final_reviewable_backlog) + ' pts of backlog, all reviewable, of 12 PIs</p></div>';
+
+  function finalsRow(label, a, b) {
+    return '<tr><td>' + label + '</td><td class="mono vacuum-col">' + a + '</td><td class="mono parity-col">' + b + '</td></tr>';
+  }
+  document.getElementById('compare').innerHTML =
+    '<h2>Same seed, final state</h2>' +
+    '<table class="finals"><thead><tr><th></th><th class="vacuum">Vacuum</th><th class="parity">Parity</th></tr></thead><tbody>' +
+    finalsRow('Guesses made', recVacuum.total_guesses, recParity.total_guesses) +
+    finalsRow('Mandate/negotiation wins', recVacuum.total_forced, recParity.total_forced) +
+    finalsRow('Wrong calls', recVacuum.total_misses, recParity.total_misses) +
+    finalsRow('Reviewable backlog (final)', fmt1(recVacuum.final_reviewable_backlog), fmt1(recParity.final_reviewable_backlog)) +
+    finalsRow('Unreviewable backlog (final)', fmt1(recVacuum.final_unreviewable_backlog), fmt1(recParity.final_unreviewable_backlog)) +
+    finalsRow('Catastrophic (retired metric — historical only)', recVacuum.final_catastrophic ? 'Yes, PI ' + recVacuum.first_catastrophe_pi : 'No', recParity.final_catastrophic ? 'Yes, PI ' + recParity.first_catastrophe_pi : 'No') +
+    '</tbody></table>' +
+    '<p class="finals-note">Both columns are the real, published v0.8 reference engine (stdlib Python, no LLM calls, no scripted dialogue) run on identical random draws for every ambiguous decision. The only input that differs between columns is <code>structural_rank_gap</code> and <code>pm_mandate_access</code> &mdash; the two variables H-005 is about. The catastrophe row reproduces the historical field from that run; the repo’s own audit found that metric invalid for comparative inference, so it is not a claim being made here — guesses / forced / wrong-call counts and backlog reviewability are.</p>';
+
+  /* ================= LIVE PANEL (real rules, reimplemented in JS, fresh randomness) ================= */
+
+  function uniform(rng, lo, hi) { return lo + rng() * (hi - lo); }
+
+  function drawPiEvent(rng) {
+    if (rng() < ENGINE.P_NO_AMBIGUITY_THIS_PI) {
+      return { has_event: false, finalize_sprint: 1, internal_disagreement: false, true_value: 'B', signal_value: 'B', signal_sprint: 99 };
+    }
+    const disagreement = rng() < ENGINE.P_DISAGREEMENT_GIVEN_AMBIGUITY;
+    const true_value = 'B';
+    let signal_sprint, signal_correct, finalize_sprint;
+    if (disagreement) {
+      signal_sprint = 3 + Math.floor(rng() * 3);
+      signal_correct = rng() < 0.5;
+      const lo = signal_sprint + 1, hi = ENGINE.N_SPRINTS + 1;
+      finalize_sprint = Math.min(ENGINE.N_SPRINTS, lo + Math.floor(rng() * (hi - lo + 1)));
+    } else {
+      signal_sprint = 1;
+      signal_correct = true;
+      finalize_sprint = 2 + Math.floor(rng() * 3);
+    }
+    const signal_value = signal_correct ? true_value : (true_value === 'B' ? 'A' : 'B');
+    return { has_event: true, internal_disagreement: disagreement, signal_sprint: signal_sprint,
+      signal_correct: signal_correct, finalize_sprint: finalize_sprint, true_value: true_value, signal_value: signal_value };
+  }
+
+  function decisionValue(sprint, ev, rng) {
+    if (sprint < ev.signal_sprint) return rng() < 0.5 ? 'A' : 'B';
+    return ev.signal_value;
+  }
+
+  function runPiLive(condition, ev, state, piIndex, rng) {
+    const pi = {
+      pi_index: piIndex, has_event: ev.has_event, internal_disagreement: ev.internal_disagreement,
+      true_value: ev.true_value, signal_value: ev.signal_value, signal_sprint: ev.signal_sprint,
+      finalize_sprint: ev.finalize_sprint, sprints: [], outcome: null,
+    };
+    if (!ev.has_event) { pi.outcome = 'no_ambiguity_this_pi'; return pi; }
+
+    let tier2Remaining = ENGINE.TIER2_POOL_PER_PI;
+    let mandateUsed = 0;
+    let guessed = false, forced = false;
+    let guessSprint = null, guessValue = null;
+    let forcedVia = null, forcedValue = null;
+    let finalized = false;
+
+    const guessProbBonus = state.belief_spawned ? ENGINE.BELIEF_GUESS_PROB_BUMP : 0.0;
+    const escalateMult = state.belief_spawned ? ENGINE.BELIEF_ESCALATE_PROB_MULT : 1.0;
+    const tenureBonus = Math.min(ENGINE.TENURE_BONUS_CAP, ENGINE.TENURE_BONUS_PER_PI * piIndex);
+
+    for (let sprint = 1; sprint <= ENGINE.N_SPRINTS; sprint++) {
+      if (finalized) break;
+      if (sprint >= ev.finalize_sprint) { finalized = true; break; }
+
+      if (!guessed && !forced) {
+        const escalateProb = 0.35 * escalateMult;
+        const guessProb = Math.min(0.95, 0.15 + 0.15 * sprint + guessProbBonus);
+        const roll = rng();
+        const canMandate = condition.pm_mandate_access === 'full_capped' && mandateUsed < ENGINE.MANDATE_USES_PER_PI;
+        const sLog = { sprint: sprint, action: 'wait' };
+
+        if (roll < escalateProb && (tier2Remaining > 0 || canMandate)) {
+          let success, cost, via;
+          if (canMandate) {
+            success = true; cost = 0.0; via = 'mandate'; mandateUsed += 1;
+            sLog.action = 'escalate_mandate'; sLog.success = true; sLog.cost = 0.0;
+          } else {
+            const rawBid = uniform(rng, ENGINE.PM_BID_RANGE[0], ENGINE.PM_BID_RANGE[1]);
+            if (tier2Remaining < rawBid) {
+              success = false; cost = 0.0; via = 'negotiation';
+              sLog.action = 'escalate_negotiation_no_budget';
+              sLog.raw_bid = round2(rawBid); sLog.success = false;
+            } else {
+              const effectiveBid = rawBid * (condition.structural_rank_gap ? ENGINE.RANK_GAP_BID_DISCOUNT : 1.0) + tenureBonus;
+              const defenseBid = uniform(rng, ENGINE.PDM_DEFENSE_RANGE[0], ENGINE.PDM_DEFENSE_RANGE[1]);
+              success = effectiveBid > defenseBid;
+              cost = rawBid; via = 'negotiation';
+              sLog.action = 'escalate_negotiation';
+              sLog.raw_bid = round2(rawBid);
+              sLog.structural_rank_gap = condition.structural_rank_gap;
+              sLog.rank_gap_discount = condition.structural_rank_gap ? ENGINE.RANK_GAP_BID_DISCOUNT : 1.0;
+              sLog.tenure_bonus = round3(tenureBonus);
+              sLog.effective_bid = round2(effectiveBid);
+              sLog.defense_bid = round2(defenseBid);
+              sLog.success = success;
+            }
+            via = 'negotiation';
+          }
+          tier2Remaining -= cost;
+          if (success) {
+            forced = true; forcedVia = via;
+            forcedValue = decisionValue(sprint, ev, rng);
+            sLog.forced_value = forcedValue;
+            finalized = true;
+            pi.sprints.push(sLog);
+            break;
+          }
+        } else if (roll < escalateProb + guessProb) {
+          guessed = true; guessSprint = sprint;
+          guessValue = decisionValue(sprint, ev, rng);
+          sLog.action = 'guess'; sLog.guess_value = guessValue;
+        }
+        pi.sprints.push(sLog);
+      }
+    }
+
+    if (forced) {
+      state.forced += 1;
+      const match = forcedValue === ev.true_value;
+      pi.outcome = 'forced_via_' + forcedVia + '_' + (match ? 'correct' : 'WRONG');
+      if (!match) {
+        state.misses += 1; state.mismatch_count += 1;
+        const invalidated = ENGINE.GUESS_EFFORT * ENGINE.REWORK_INVALIDATION_FRACTION;
+        state.reviewable_backlog += invalidated;
+      }
+    } else if (guessed) {
+      state.guesses += 1;
+      const match = guessValue === ev.true_value;
+      pi.outcome = 'guessed_' + (match ? 'correct' : 'WRONG');
+      if (!match) {
+        state.misses += 1; state.mismatch_count += 1;
+        const invalidated = ENGINE.GUESS_EFFORT * ENGINE.REWORK_INVALIDATION_FRACTION;
+        if (condition.principal_seat_vacant) {
+          state.unreviewable_backlog += invalidated;
+          pi.backlog_type = 'unreviewable (principal seat vacant -- never pays down)';
+        } else {
+          state.reviewable_backlog += invalidated;
+          pi.backlog_type = 'reviewable';
+        }
+      }
+    } else {
+      pi.outcome = 'resolved_without_escalation_or_guess';
+    }
+
+    if (state.mismatch_count >= ENGINE.BELIEF_MISMATCH_THRESHOLD) state.belief_spawned = true;
+    pi.reviewable_backlog_after = round2(state.reviewable_backlog);
+    pi.unreviewable_backlog_after = round2(state.unreviewable_backlog);
+    return pi;
+  }
+
+  function simulateLive(structuralRankGap, mandateAccess, kPis) {
+    const condition = {
+      structural_rank_gap: structuralRankGap, pm_mandate_access: mandateAccess,
+      principal_seat_vacant: structuralRankGap && mandateAccess === 'none',
+    };
+    const state = {
+      reviewable_backlog: 0, unreviewable_backlog: 0, mismatch_count: 0, belief_spawned: false,
+      guesses: 0, forced: 0, misses: 0,
+    };
+    const rng = Math.random;
+    const events = [];
+    for (let piIndex = 1; piIndex <= kPis; piIndex++) {
+      state.reviewable_backlog *= (1 - ENGINE.PAYDOWN_RATE);
+      state.unreviewable_backlog *= (1 - ENGINE.UNREVIEWABLE_PAYDOWN_RATE);
+      const ev = drawPiEvent(rng);
+      events.push(runPiLive(condition, ev, state, piIndex, rng));
+    }
+    return {
+      final_reviewable_backlog: round2(state.reviewable_backlog),
+      final_unreviewable_backlog: round2(state.unreviewable_backlog),
+      total_guesses: state.guesses, total_forced: state.forced, total_misses: state.misses,
+      events: events,
+    };
+  }
+
+  const tallies = {
+    vacuum: { runs: 0, misses: 0, guesses: 0, forced: 0 },
+    parity: { runs: 0, misses: 0, guesses: 0, forced: 0 },
+  };
+  const liveBusy = { vacuum: false, parity: false };
+
+  function sleep(ms) { return new Promise(function (res) { setTimeout(res, ms); }); }
+
+  async function runLiveColumn(key, structuralRankGap, mandateAccess) {
+    if (liveBusy[key]) return;
+    liveBusy[key] = true;
+    const btn = document.getElementById('run-' + key);
+    const listEl = document.getElementById('col-' + key + '-live');
+    const gaugeEl = document.getElementById('gauge-' + key + '-live');
+    btn.disabled = true;
+    listEl.innerHTML = '';
+    gaugeEl.style.width = '0';
+
+    const run = simulateLive(structuralRankGap, mandateAccess, 12);
+
+    let running = 0;
+    for (let i = 0; i < run.events.length; i++) {
+      const r = buildPiCardHtml(run.events[i], running, false);
+      running = r.after;
+      const node = document.createElement('div');
+      node.innerHTML = r.html;
+      const card = node.firstElementChild;
+      if (!reduceMotion) card.classList.add('entering');
+      listEl.appendChild(card);
+      gaugeEl.style.width = Math.min(100, (running / LIVE_GAUGE_MAX) * 100) + '%';
+      if (!reduceMotion) await sleep(150);
+    }
+
+    tallies[key].runs += 1;
+    tallies[key].misses += run.total_misses;
+    tallies[key].guesses += run.total_guesses;
+    tallies[key].forced += run.total_forced;
+    const avgMisses = (tallies[key].misses / tallies[key].runs).toFixed(1);
+    document.getElementById('tally-' + key).textContent =
+      tallies[key].runs + ' run' + (tallies[key].runs === 1 ? '' : 's') + ' · avg ' + avgMisses + ' wrong calls/run';
+
+    document.getElementById('stat-' + key).innerHTML =
+      '<b>' + run.total_guesses + ' guesses, ' + run.total_forced + ' forced</b>' +
+      ' · backlog ' + fmt1(run.final_reviewable_backlog + run.final_unreviewable_backlog) +
+      ' (' + fmt1(run.final_unreviewable_backlog) + ' unreviewable) · ' + run.total_misses + ' wrong calls of 12';
+
+    btn.disabled = false;
+    liveBusy[key] = false;
+  }
+
+  document.getElementById('run-vacuum').addEventListener('click', function () { runLiveColumn('vacuum', true, 'none'); });
+  document.getElementById('run-parity').addEventListener('click', function () { runLiveColumn('parity', false, 'full_capped'); });
+  document.getElementById('run-both').addEventListener('click', function () {
+    runLiveColumn('vacuum', true, 'none');
+    runLiveColumn('parity', false, 'full_capped');
+  });
+
+  /* ================= CASCADE PANEL (new: Pod Sync → Sprint Review → Pre-GM → GM) =================
+     Not part of the published v0.8 engine. Reuses v0.8's real formulas (PM_BID_RANGE,
+     PDM_DEFENSE_RANGE, RANK_GAP_BID_DISCOUNT, TENURE_BONUS, GUESS_EFFORT, PAYDOWN_RATE, the
+     signal/finalize timing in drawPiEvent/decisionValue) but applies them across the actual
+     multi-tier structure instead of one flat PM-vs-PdM comparison. Every tier meeting is a single
+     resolution attempt (a meeting happens once), timed against the same signal/finalize clock via
+     decisionValue(sprintPosition, ev, rng) — later tiers meet later in the PI, so by the time an
+     item reaches the GM the underlying signal is almost always already known. */
+
+  const CASCADE = {
+    N_PODS: 3,
+    POD_SYNC_SPRINT: 2,
+    SPRINT_REVIEW_SPRINT: 4,
+    SPRINT_REVIEW_CAPACITY: 1,   // director/VP can properly adjudicate at most this many escalated items per PI
+    PRE_GM_SPRINT: 5,
+    PRE_GM_CAPACITY: 1,          // staging capacity — most overflow gets mopped up here
+    GM_SPRINT: 6,
+  };
+  // Backlog now aggregates across 3 pods instead of one flat stream, so the gauge scale
+  // needs to widen with it — same idea as Live's LIVE_GAUGE_MAX, applied to a 3-pod org
+  // instead of a 1-item-per-PI org. (No catastrophe threshold here — see note above on
+  // why that metric isn't computed outside the Recorded historical replay.)
+  const CASCADE_GAUGE_MAX = LIVE_GAUGE_MAX * CASCADE.N_PODS;
+
+  function podSyncAttempt(condition, ev, rng, tenureBonus) {
+    const canMandate = condition.pm_mandate_access === 'full_capped';
+    if (canMandate) {
+      return { resolved: true, value: decisionValue(CASCADE.POD_SYNC_SPRINT, ev, rng), via: 'mandate' };
+    }
+    const rawBid = uniform(rng, ENGINE.PM_BID_RANGE[0], ENGINE.PM_BID_RANGE[1]);
+    const effectiveBid = rawBid * (condition.structural_rank_gap ? ENGINE.RANK_GAP_BID_DISCOUNT : 1.0) + tenureBonus;
+    const defenseBid = uniform(rng, ENGINE.PDM_DEFENSE_RANGE[0], ENGINE.PDM_DEFENSE_RANGE[1]);
+    if (effectiveBid > defenseBid) {
+      return { resolved: true, value: decisionValue(CASCADE.POD_SYNC_SPRINT, ev, rng), via: 'negotiation' };
+    }
+    return { resolved: false, via: 'negotiation' };
+  }
+
+  function capacityTierAttempt(sprintPosition, ev, rng, capacityLeft) {
+    if (capacityLeft <= 0) return { resolved: false };
+    return { resolved: true, value: decisionValue(sprintPosition, ev, rng) };
+  }
+
+  function runCascadePi(condition, piIndex, state, rng) {
+    const tenureBonus = Math.min(ENGINE.TENURE_BONUS_CAP, ENGINE.TENURE_BONUS_PER_PI * piIndex);
+
+    const podResults = [];
+    const toSprintReview = [];
+    for (let p = 0; p < CASCADE.N_PODS; p++) {
+      const ev = drawPiEvent(rng);
+      if (!ev.has_event) { podResults.push({ pod: p, has_event: false }); continue; }
+      const attempt = podSyncAttempt(condition, ev, rng, tenureBonus);
+      if (attempt.resolved) {
+        podResults.push({ pod: p, has_event: true, resolved: true, via: attempt.via, value: attempt.value, ev: ev });
+      } else {
+        podResults.push({ pod: p, has_event: true, resolved: false, ev: ev });
+        toSprintReview.push({ pod: p, ev: ev });
+      }
+    }
+
+    let srCap = CASCADE.SPRINT_REVIEW_CAPACITY;
+    const sprintResults = [];
+    const toPreGm = [];
+    toSprintReview.forEach(function (item) {
+      const attempt = capacityTierAttempt(CASCADE.SPRINT_REVIEW_SPRINT, item.ev, rng, srCap);
+      if (attempt.resolved) { srCap -= 1; sprintResults.push({ pod: item.pod, resolved: true, value: attempt.value, ev: item.ev }); }
+      else { sprintResults.push({ pod: item.pod, resolved: false, ev: item.ev }); toPreGm.push(item); }
+    });
+
+    let pgCap = CASCADE.PRE_GM_CAPACITY;
+    const preGmResults = [];
+    const toGm = [];
+    toPreGm.forEach(function (item) {
+      const attempt = capacityTierAttempt(CASCADE.PRE_GM_SPRINT, item.ev, rng, pgCap);
+      if (attempt.resolved) { pgCap -= 1; preGmResults.push({ pod: item.pod, resolved: true, value: attempt.value, ev: item.ev }); }
+      else { preGmResults.push({ pod: item.pod, resolved: false, ev: item.ev }); toGm.push(item); }
+    });
+
+    const gmResults = toGm.map(function (item) {
+      return { pod: item.pod, value: decisionValue(CASCADE.GM_SPRINT, item.ev, rng), ev: item.ev };
+    });
+
+    const resolved = [];
+    podResults.forEach(function (r) { if (r.resolved) resolved.push(r); });
+    sprintResults.forEach(function (r) { if (r.resolved) resolved.push(r); });
+    preGmResults.forEach(function (r) { if (r.resolved) resolved.push(r); });
+    gmResults.forEach(function (r) { resolved.push(r); });
+
+    let misses = 0;
+    resolved.forEach(function (r) {
+      if (r.value !== r.ev.true_value) {
+        misses += 1;
+        const invalidated = ENGINE.GUESS_EFFORT * ENGINE.REWORK_INVALIDATION_FRACTION;
+        if (condition.principal_seat_vacant) state.unreviewable_backlog += invalidated;
+        else state.reviewable_backlog += invalidated;
+      }
+    });
+
+    state.gm_decisions += gmResults.length;
+    state.items_total += podResults.filter(function (p) { return p.has_event; }).length;
+    state.pod_sync_resolved += podResults.filter(function (p) { return p.resolved; }).length;
+    state.misses += misses;
+
+    return {
+      pi_index: piIndex, pods: podResults, sprint: sprintResults, preGm: preGmResults, gm: gmResults,
+      misses: misses,
+      reviewable_backlog_after: round2(state.reviewable_backlog),
+      unreviewable_backlog_after: round2(state.unreviewable_backlog),
+    };
+  }
+
+  function simulateCascade(structuralRankGap, mandateAccess, kPis) {
+    const condition = {
+      structural_rank_gap: structuralRankGap, pm_mandate_access: mandateAccess,
+      principal_seat_vacant: structuralRankGap && mandateAccess === 'none',
+    };
+    const state = {
+      reviewable_backlog: 0, unreviewable_backlog: 0,
+      gm_decisions: 0, items_total: 0, pod_sync_resolved: 0, misses: 0,
+    };
+    const rng = Math.random;
+    const events = [];
+    for (let piIndex = 1; piIndex <= kPis; piIndex++) {
+      state.reviewable_backlog *= (1 - ENGINE.PAYDOWN_RATE);
+      state.unreviewable_backlog *= (1 - ENGINE.UNREVIEWABLE_PAYDOWN_RATE);
+      events.push(runCascadePi(condition, piIndex, state, rng));
+    }
+    return {
+      events: events,
+      final_reviewable_backlog: round2(state.reviewable_backlog), final_unreviewable_backlog: round2(state.unreviewable_backlog),
+      gm_decisions: state.gm_decisions, items_total: state.items_total, pod_sync_resolved: state.pod_sync_resolved,
+      misses: state.misses,
+    };
+  }
+
+  function podLabel(idx) { return 'Pod ' + (idx + 1); }
+
+  function buildCascadePiHtml(pi) {
+    const totalItems = pi.pods.filter(function (p) { return p.has_event; }).length;
+    let html = '<div class="pi-card cascade-pi">';
+    html += '<div class="pi-top"><span class="pi-index">PI ' + String(pi.pi_index).padStart(2, '0') + '</span>' +
+      '<span class="badge neutral">' + totalItems + ' item' + (totalItems === 1 ? '' : 's') + ' this PI</span></div>';
+
+    html += '<div class="tier-row"><div class="tier-label">Pod Sync <span class="tier-sub">pod leaders — PM · PdM · EM</span></div><div class="pod-items">';
+    if (totalItems === 0) {
+      html += '<span class="pod-chip neutral">all pods quiet this PI</span>';
+    } else {
+      pi.pods.forEach(function (p) {
+        if (!p.has_event) { html += '<span class="pod-chip neutral">' + podLabel(p.pod) + ' — quiet</span>'; return; }
+        if (p.resolved) {
+          const wrong = p.value !== p.ev.true_value;
+          html += '<span class="pod-chip ' + (wrong ? 'critical' : 'good') + '">' + podLabel(p.pod) +
+            ' — resolved' + (p.via === 'mandate' ? ' (mandate)' : '') + (wrong ? ', wrong' : '') + '</span>';
+        } else {
+          html += '<span class="pod-chip warning">' + podLabel(p.pod) + ' — escalated ↑</span>';
+        }
+      });
+    }
+    html += '</div></div>';
+
+    html += '<div class="tier-row"><div class="tier-label">Sprint Review <span class="tier-sub">director / VP</span></div><div class="pod-items">';
+    if (pi.sprint.length === 0) {
+      html += '<span class="pod-chip neutral">nothing escalated here</span>';
+    } else {
+      pi.sprint.forEach(function (s) {
+        if (s.resolved) {
+          const wrong = s.value !== s.ev.true_value;
+          html += '<span class="pod-chip ' + (wrong ? 'critical' : 'good') + '">' + podLabel(s.pod) + ' item — resolved' + (wrong ? ', wrong' : '') + '</span>';
+        } else {
+          html += '<span class="pod-chip warning">' + podLabel(s.pod) + ' item — over capacity, passed up ↑</span>';
+        }
+      });
+    }
+    html += '</div></div>';
+
+    html += '<div class="tier-row"><div class="tier-label">Pre-GM <span class="tier-sub">staging &amp; triage</span></div><div class="pod-items">';
+    if (pi.preGm.length === 0) {
+      html += '<span class="pod-chip neutral">nothing reached this stage</span>';
+    } else {
+      pi.preGm.forEach(function (s) {
+        if (s.resolved) {
+          const wrong = s.value !== s.ev.true_value;
+          html += '<span class="pod-chip ' + (wrong ? 'critical' : 'good') + '">' + podLabel(s.pod) + ' item — resolved by directive' + (wrong ? ', wrong' : '') + '</span>';
+        } else {
+          html += '<span class="pod-chip critical">' + podLabel(s.pod) + ' item — still unresolved ↑</span>';
+        }
+      });
+    }
+    html += '</div></div>';
+
+    html += '<div class="tier-row gm-row"><div class="tier-label">GM meeting <span class="tier-sub">informational, then decides what’s left</span></div><div class="pod-items">';
+    if (pi.gm.length === 0) {
+      html += '<span class="pod-chip good">fully informational — nothing needed the GM&rsquo;s decision</span>';
+    } else {
+      pi.gm.forEach(function (g) {
+        const wrong = g.value !== g.ev.true_value;
+        html += '<span class="pod-chip ' + (wrong ? 'critical' : 'gm') + '">' + podLabel(g.pod) + ' item — GM decides' + (wrong ? ', wrong' : '') + '</span>';
+      });
+    }
+    html += '</div></div>';
+
+
+    html += '<div class="backlog-line"><span>' + pi.misses + ' wrong call' + (pi.misses === 1 ? '' : 's') + ' this PI</span>' +
+      '<span class="val">total backlog ' + fmt1(pi.reviewable_backlog_after + pi.unreviewable_backlog_after) + '</span></div>';
+
+    html += '</div>';
+    return html;
+  }
+
+  const cascadeTallies = { vacuum: { runs: 0 }, parity: { runs: 0 } };
+  const cascadeBusy = { vacuum: false, parity: false };
+
+  async function runCascadeColumn(key, structuralRankGap, mandateAccess) {
+    if (cascadeBusy[key]) return;
+    cascadeBusy[key] = true;
+    const btn = document.getElementById('run-' + key + '-cascade');
+    const listEl = document.getElementById('col-' + key + '-cascade');
+    const gaugeEl = document.getElementById('gauge-' + key + '-cascade');
+    btn.disabled = true;
+    listEl.innerHTML = '';
+    gaugeEl.style.width = '0';
+
+    const run = simulateCascade(structuralRankGap, mandateAccess, 12);
+
+    for (let i = 0; i < run.events.length; i++) {
+      const pi = run.events[i];
+      const node = document.createElement('div');
+      node.innerHTML = buildCascadePiHtml(pi);
+      const card = node.firstElementChild;
+      if (!reduceMotion) card.classList.add('entering');
+      listEl.appendChild(card);
+      const running = pi.reviewable_backlog_after + pi.unreviewable_backlog_after;
+      gaugeEl.style.width = Math.min(100, (running / CASCADE_GAUGE_MAX) * 100) + '%';
+      if (!reduceMotion) await sleep(150);
+    }
+
+    cascadeTallies[key].runs += 1;
+    document.getElementById('tally-' + key + '-cascade').textContent =
+      cascadeTallies[key].runs + ' run' + (cascadeTallies[key].runs === 1 ? '' : 's');
+
+    const podSyncPct = run.items_total > 0 ? Math.round((run.pod_sync_resolved / run.items_total) * 100) : 0;
+    document.getElementById('stat-' + key + '-cascade').innerHTML =
+      '<span><b>' + run.items_total + '</b> items raised across 12 PIs</span>' +
+      '<span><b>' + podSyncPct + '%</b> resolved at Pod Sync</span>' +
+      '<span><b>' + run.gm_decisions + '</b> reached the GM for an actual decision</span>' +
+      '<span><b>' + run.misses + '</b> wrong calls</span>';
+
+    btn.disabled = false;
+    cascadeBusy[key] = false;
+  }
+
+  document.getElementById('run-vacuum-cascade').addEventListener('click', function () { runCascadeColumn('vacuum', true, 'none'); });
+  document.getElementById('run-parity-cascade').addEventListener('click', function () { runCascadeColumn('parity', false, 'full_capped'); });
+  document.getElementById('run-both-cascade').addEventListener('click', function () {
+    runCascadeColumn('vacuum', true, 'none');
+    runCascadeColumn('parity', false, 'full_capped');
+  });
+
+  /* ================= POD VERTICAL SLICE (new: 13 curated issues, one meeting cycle, real dialogue) =================
+     Opening arguments per issue are hand-written for this demo — not computed. What IS computed, using
+     the same bid/mandate/rank-gap formulas as the other tabs: whether an issue aligns or escalates at
+     each tier, and how far up the chain it travels. Resolution/escalation lines at each tier are drawn
+     from small generic template banks (interpolated with the issue's topic), not hand-written per issue —
+     that split is stated on the page itself. */
+
+  const ISSUES = [
+    { id: 'weapon-ui', topic: 'Weapon customization UI rework', type: 'schedule_tradeoff', stakes: 4, lines: {
+      prog: "This pushes our schedule by two sprints if we take it on now.",
+      prod: "We really need this for the upcoming demo.",
+      eng: "We're still ramping two new hires — I'm not confident we land our other commitments if we add this.",
+      td: "I don't think this is important enough to push out the architecture work we already committed to.",
+    }},
+    { id: 'matchmaking-latency', topic: 'Matchmaking latency fix', type: 'staffing_risk', stakes: 4, lines: {
+      prog: "If Eng takes this on, something else slips — I need to know what.",
+      prod: "Latency complaints are already showing up in playtest feedback, this can't wait a full PI.",
+      eng: "It's a two-person fix, but both of those people are mid-onboarding on the netcode rewrite.",
+      td: "Fine by me as long as it doesn't touch the rewrite branch.",
+    }},
+    { id: 'cosmetic-pipeline', topic: 'Season 2 cosmetic pipeline', type: 'scope_cut', stakes: 3, lines: {
+      prog: "Art's asking for six weeks and we've budgeted four.",
+      prod: "Cosmetics are our best monetization lever — I don't want to cut scope here.",
+      eng: "The pipeline tooling isn't actually the bottleneck, the review cycle is.",
+      td: "Not an architecture issue. This is a process problem, not ours to solve.",
+    }},
+    { id: 'save-corruption', topic: 'Save-file corruption on crossplay', type: 'cross_team_dependency', stakes: 5, lines: {
+      prog: "This traces back to a shared serialization format — the rendering team owns half of it.",
+      prod: "This is a trust-breaker for players if it ships broken.",
+      eng: "We can patch our half, but the real fix needs the rendering team's buy-in on the format change.",
+      td: "Agreed — this isn't something we can close in this room.",
+    }},
+    { id: 'onboarding-redesign', topic: 'Onboarding tutorial redesign', type: 'demo_priority', stakes: 5, lines: {
+      prog: "Doable this PI if nothing else moves.",
+      prod: "First-hour retention is our weakest metric — this is the highest-leverage thing we could ship.",
+      eng: "Doable, but it eats the buffer we were saving for the con build.",
+      td: "No architecture concerns from me.",
+    }},
+    { id: 'tick-rate', topic: 'Server tick-rate increase', type: 'architecture_conflict', stakes: 4, lines: {
+      prog: "Prod's asking for this to be ready before the tournament announcement.",
+      prod: "Competitive players are vocal about this — we need it before we lose them to the press cycle.",
+      eng: "It's not just a config change, it touches the physics step.",
+      td: "This is exactly the kind of change that should go through the architecture review we've already scheduled — not get rushed for a PR date.",
+    }},
+    { id: 'inventory-refactor', topic: 'Inventory system refactor', type: 'tech_debt', stakes: 2, lines: {
+      prog: "Nobody outside this room is asking for this.",
+      prod: "Understood, but every feature request this quarter has hit the same wall.",
+      eng: "I'd rather eat the cost now than keep paying interest on it every sprint.",
+      td: "Fully agree — this has been on the architecture backlog for two PIs already.",
+    }},
+    { id: 'voice-mod', topic: 'Voice chat moderation tools', type: 'compliance', stakes: 3, lines: {
+      prog: "Legal flagged this as a soft deadline, not a hard one, but it's close.",
+      prod: "Not something players ask for, but it's a platform cert requirement.",
+      eng: "We can hit it, but it means the ping system slips a sprint.",
+      td: "No objection from an architecture standpoint.",
+    }},
+    { id: 'boss-difficulty', topic: 'Boss encounter difficulty pass', type: 'balance_tuning', stakes: 2, lines: {
+      prog: "This is a tuning pass, should be low-risk on schedule.",
+      prod: "Playtest sentiment on the final boss is rough — I want this prioritized.",
+      eng: "Low engineering lift, mostly design and QA time.",
+      td: "No concerns.",
+    }},
+    { id: 'ci-speed', topic: 'Build pipeline / CI speed', type: 'tooling', stakes: 1, lines: {
+      prog: "This is quality-of-life, not a commitment — I don't want to formally schedule it.",
+      prod: "If it's not blocking a milestone, it's not on my radar this PI.",
+      eng: "Our build times are costing us real hours every week — I want this logged as a real item, not busywork.",
+      td: "Support this. Same bucket as the inventory refactor — infrastructure debt.",
+    }},
+    { id: 'narrative-branch', topic: 'Narrative branch for Act 2', type: 'scope_cut', stakes: 3, lines: {
+      prog: "Writing needs a decision this week or the branch gets cut.",
+      prod: "This branch is what differentiates Act 2 from Act 1 — I don't want to lose it.",
+      eng: "Content-only, minimal engineering lift.",
+      td: "No architecture impact.",
+    }},
+    { id: 'anti-cheat', topic: 'Anti-cheat vendor integration', type: 'staffing_risk', stakes: 5, lines: {
+      prog: "Vendor's asking for a two-week integration window we haven't budgeted.",
+      prod: "We've had three cheating reports go semi-viral — this is reputational, not optional.",
+      eng: "The window's tight given who's out on the team this month.",
+      td: "This touches the netcode layer, same area as the tick-rate change — I'd rather sequence these together.",
+    }},
+    { id: 'save-sync-ui', topic: 'Cross-platform save sync UI', type: 'schedule_tradeoff', stakes: 1, lines: {
+      prog: "This is scoped as a nice-to-have, not this PI's commitment.",
+      prod: "Players ask for this constantly, it's a top forum request.",
+      eng: "It's a thin UI layer on top of whatever ships for the save-corruption fix — cheap if that lands first.",
+      td: "Sequencing makes sense, no objection.",
+    }},
+  ];
+
+  const SLICE = {
+    MATURITY_BONUS: 0.9,        // pod-level negotiating maturity, applied regardless of condition
+    MANDATE_BUDGET: 4,          // capped mandate: at most 4 uses per meeting, spent post-negotiation on
+                                 // the highest-stakes issues Program would otherwise lose (see runPodSlice)
+    SPRINT_LEAD_BONUS: -0.3,    // Director/VP authority alone, no rank-gap discount at this tier — same for both
+                                 // regimes on purpose: the condition only changes what the pod sends up, not
+                                 // the leadership tier's own authority. Any gap between regimes here should
+                                 // come from queue composition, not a second lever hidden in the same toggle.
+    PRE_GM_BONUS: -0.9,         // Pre-GM is staging/triage, not real negotiating authority — mostly passes through
+    GM_DEFER_PROB: 0.2,
+  };
+
+  const POD_ALIGN_NEGOTIATED_TEMPLATES = [
+    [{ role: 'prog', text: "If we trim scope on {topic}, we can still hit the sprint commitment." }, { role: 'prod', text: "That works — we don't need everything, just enough to land it." }],
+    [{ role: 'prog', text: "I can take {topic} on if Eng gets two days back next sprint to compensate." }, { role: 'eng', text: "I can live with that." }],
+  ];
+  const POD_ALIGN_MANDATE_TEMPLATES = [
+    [{ role: 'prog', text: "I'm spending our mandate on {topic} — this one's worth it, we're trimming scope to protect the commitment." }, { role: 'prod', text: "Noted. I'll flag it if it becomes a real problem." }],
+  ];
+  const POD_ESCALATE_TEMPLATES = [
+    [{ role: 'prod', text: "I hear the schedule risk, but {topic} isn't optional from where I sit." }, { role: 'prog', text: "Then we're not aligned here — this goes to Sprint Review." }],
+    [{ role: 'eng', text: "We genuinely don't have the room for {topic} without cutting something else." }, { role: 'prod', text: "I'm not willing to cut it. Let Sprint Review sort it out." }],
+    [{ role: 'td', text: "This one's outside what we should be settling at this table anyway." }, { role: 'prog', text: "Agreed — flagging {topic} for Sprint Review." }],
+  ];
+  const POD_STRUCTURAL_TEMPLATES = [
+    [{ role: 'prog', text: "{topic} depends on a system another team owns — we can't close this in this room." }, { role: 'td', text: "Agreed, this isn't ours to resolve alone." }],
+  ];
+  const SPRINT_RESOLVE_TEMPLATES = [
+    [{ role: 'lead', text: "VP Product: {topic} stays in scope — I'll own that conversation if it comes up higher." }, { role: 'lead', text: "Director Eng: Understood, we'll make it work." }],
+    [{ role: 'lead', text: "Director Program: Given where Eng's capacity is, {topic} slips a PI." }, { role: 'lead', text: "VP Product: Not thrilled, but I won't fight it here." }],
+    [{ role: 'lead', text: "VP Product: We're settling {topic} here — no need to send it further." }],
+  ];
+  const SPRINT_ESCALATE_TEMPLATES = [
+    [{ role: 'lead', text: "VP Product: We still don't agree on {topic}." }, { role: 'lead', text: "Director Eng: Same. This needs more than the room we have today." }],
+  ];
+  const SPRINT_STRUCTURAL_TEMPLATES = [
+    [{ role: 'lead', text: "Director Program: {topic} still depends on the other team's timeline — we don't have the authority to resolve it here either." }],
+  ];
+  const PREGM_INFO_TEMPLATES = [
+    [{ role: 'pm', text: "PM: Walking leadership through {topic} — here's where things stand, and why it didn't close below." }],
+  ];
+  const PREGM_INFO_STRUCTURAL_TEMPLATES = [
+    [{ role: 'pm', text: "PM: {topic} is blocked on a cross-team dependency — flagging it so the GM isn't hearing this cold." }],
+  ];
+  const PREGM_RESOLVE_TEMPLATES = [
+    [{ role: 'lead', text: "Director Eng: Given everything on the table, we're calling {topic} now — no need to take it further." }],
+  ];
+  const PREGM_ESCALATE_TEMPLATES = [
+    [{ role: 'lead', text: "VP Product: This one genuinely needs the GM's read. Packaging it for the meeting." }],
+  ];
+  const GM_DECIDE_TEMPLATES = [
+    [{ role: 'gm', text: "GM: {topic} — we're moving forward as scoped. Make it work." }],
+    [{ role: 'gm', text: "GM: {topic} — we're holding this for next PI. Not worth the risk right now." }],
+  ];
+  const GM_DEFER_TEMPLATES = [
+    [{ role: 'gm', text: "GM: I want more input before deciding {topic} — let's pick this back up next GM meeting." }],
+  ];
+
+  function pick(rng, arr) { return arr[Math.floor(rng() * arr.length)]; }
+  function fillTemplate(lines, topic) { return lines.map(function (l) { return { role: l.role, text: l.text.split('{topic}').join(topic) }; }); }
+  function roleLabel(role) {
+    const map = { prog: 'PROG', prod: 'PROD', eng: 'ENG', td: 'TD', lead: 'LEAD', gm: 'GM', pm: 'PM' };
+    return map[role] || role.toUpperCase();
+  }
+
+  function negotiatePodSync(condition, issue, rng) {
+    if (issue.type === 'cross_team_dependency') return { outcome: 'escalated', reason: 'structural' };
+    const rawBid = uniform(rng, ENGINE.PM_BID_RANGE[0], ENGINE.PM_BID_RANGE[1]);
+    const effectiveBid = rawBid * (condition.structural_rank_gap ? ENGINE.RANK_GAP_BID_DISCOUNT : 1.0) + SLICE.MATURITY_BONUS;
+    const defenseBid = uniform(rng, ENGINE.PDM_DEFENSE_RANGE[0], ENGINE.PDM_DEFENSE_RANGE[1]);
+    return effectiveBid > defenseBid ? { outcome: 'aligned', via: 'negotiation' } : { outcome: 'contested', via: 'negotiation' };
+  }
+
+  function resolveTierNegotiation(issue, rng, bonus) {
+    if (issue.type === 'cross_team_dependency') return { outcome: 'escalated', reason: 'structural' };
+    const rawBid = uniform(rng, ENGINE.PM_BID_RANGE[0], ENGINE.PM_BID_RANGE[1]);
+    const effectiveBid = rawBid + bonus;
+    const defenseBid = uniform(rng, ENGINE.PDM_DEFENSE_RANGE[0], ENGINE.PDM_DEFENSE_RANGE[1]);
+    return effectiveBid > defenseBid ? { outcome: 'resolved' } : { outcome: 'escalated', reason: 'contested' };
+  }
+
+  function runPodSlice(structuralRankGap, mandateAccess, rng) {
+    const condition = { structural_rank_gap: structuralRankGap, pm_mandate_access: mandateAccess };
+
+    // Pass 1: negotiate every issue on its own merits — mandate not spent yet.
+    const negResults = ISSUES.map(function (issue) {
+      return Object.assign({ issue: issue }, negotiatePodSync(condition, issue, rng));
+    });
+
+    // Pass 2: if Program has a capped mandate this meeting, it spends that scarce capital on the
+    // highest-stakes issues it would otherwise have lost — not on whichever issue happened to come
+    // up first. That's what makes it a decision instead of a coupon.
+    if (mandateAccess === 'full_capped') {
+      const losers = negResults.filter(function (r) { return r.outcome === 'contested'; })
+        .sort(function (a, b) { return b.issue.stakes - a.issue.stakes; });
+      let budget = SLICE.MANDATE_BUDGET;
+      for (let i = 0; i < losers.length && budget > 0; i++) {
+        losers[i].outcome = 'aligned';
+        losers[i].via = 'mandate';
+        budget -= 1;
+      }
+    }
+
+    const podSyncResults = negResults.map(function (r) {
+      return r.outcome === 'contested' ? { issue: r.issue, outcome: 'escalated', via: 'negotiation' } : r;
+    });
+
+    const escalatedToSprint = podSyncResults.filter(function (r) { return r.outcome === 'escalated'; });
+    const sprintBonus = SLICE.SPRINT_LEAD_BONUS;
+    const sprintResults = escalatedToSprint.map(function (r) {
+      return Object.assign({ issue: r.issue }, resolveTierNegotiation(r.issue, rng, sprintBonus));
+    });
+
+    const escalatedToPreGm = sprintResults.filter(function (r) { return r.outcome === 'escalated'; });
+    const preGmResults = escalatedToPreGm.map(function (r) {
+      return Object.assign({ issue: r.issue }, resolveTierNegotiation(r.issue, rng, SLICE.PRE_GM_BONUS));
+    });
+
+    const escalatedToGm = preGmResults.filter(function (r) { return r.outcome === 'escalated'; });
+    let deferredUsed = false;
+    const gmResults = escalatedToGm.map(function (r) {
+      if (!deferredUsed && rng() < SLICE.GM_DEFER_PROB) { deferredUsed = true; return { issue: r.issue, outcome: 'deferred' }; }
+      return { issue: r.issue, outcome: 'decided' };
+    });
+
+    return { podSyncResults: podSyncResults, sprintResults: sprintResults, preGmResults: preGmResults, gmResults: gmResults };
+  }
+
+  function buildPodSyncBlocks(results, rng) {
+    return results.map(function (r) {
+      const issue = r.issue;
+      const opening = [
+        { role: 'prog', text: issue.lines.prog }, { role: 'prod', text: issue.lines.prod },
+        { role: 'eng', text: issue.lines.eng }, { role: 'td', text: issue.lines.td },
+      ];
+      let resLines, verdict;
+      if (r.outcome === 'aligned' && r.via === 'mandate') {
+        resLines = fillTemplate(pick(rng, POD_ALIGN_MANDATE_TEMPLATES), issue.topic);
+        verdict = { cls: 'aligned', text: 'Aligned at Pod Sync (mandate spent)' };
+      } else if (r.outcome === 'aligned') {
+        resLines = fillTemplate(pick(rng, POD_ALIGN_NEGOTIATED_TEMPLATES), issue.topic);
+        verdict = { cls: 'aligned', text: 'Aligned at Pod Sync' };
+      } else if (r.reason === 'structural') {
+        resLines = fillTemplate(pick(rng, POD_STRUCTURAL_TEMPLATES), issue.topic);
+        verdict = { cls: 'escalated', text: 'Escalated — not solvable at pod level' };
+      } else {
+        resLines = fillTemplate(pick(rng, POD_ESCALATE_TEMPLATES), issue.topic);
+        verdict = { cls: 'escalated', text: 'Escalated to Sprint Review' };
+      }
+      return { topic: issue.topic, lines: opening.concat(resLines), verdict: verdict };
+    });
+  }
+
+  function buildTierBlocks(results, tier, rng) {
+    return results.map(function (r) {
+      const issue = r.issue;
+      let lines, verdict;
+      if (tier === 'sprint') {
+        if (r.outcome === 'resolved') {
+          lines = fillTemplate(pick(rng, SPRINT_RESOLVE_TEMPLATES), issue.topic);
+          verdict = { cls: 'aligned', text: 'Resolved at Sprint Review' };
+        } else if (r.reason === 'structural') {
+          lines = fillTemplate(pick(rng, SPRINT_STRUCTURAL_TEMPLATES), issue.topic);
+          verdict = { cls: 'escalated', text: 'Escalated — needs full leadership' };
+        } else {
+          lines = fillTemplate(pick(rng, SPRINT_ESCALATE_TEMPLATES), issue.topic);
+          verdict = { cls: 'escalated', text: 'Still unresolved — Product/Eng standoff' };
+        }
+      } else {
+        const infoBank = issue.type === 'cross_team_dependency' ? PREGM_INFO_STRUCTURAL_TEMPLATES : PREGM_INFO_TEMPLATES;
+        const info = fillTemplate(pick(rng, infoBank), issue.topic);
+        if (r.outcome === 'resolved') {
+          lines = info.concat(fillTemplate(pick(rng, PREGM_RESOLVE_TEMPLATES), issue.topic));
+          verdict = { cls: 'aligned', text: 'Resolved by directive at Pre-GM' };
+        } else {
+          lines = info.concat(fillTemplate(pick(rng, PREGM_ESCALATE_TEMPLATES), issue.topic));
+          verdict = { cls: 'escalated', text: 'Going to the GM' };
+        }
+      }
+      return { topic: issue.topic, lines: lines, verdict: verdict };
+    });
+  }
+
+  function buildGmBlocks(results, rng) {
+    return results.map(function (r) {
+      const issue = r.issue;
+      if (r.outcome === 'deferred') {
+        return { topic: issue.topic, lines: fillTemplate(pick(rng, GM_DEFER_TEMPLATES), issue.topic), verdict: { cls: 'deferred', text: 'Deferred to next GM meeting' } };
+      }
+      return { topic: issue.topic, lines: fillTemplate(pick(rng, GM_DECIDE_TEMPLATES), issue.topic), verdict: { cls: 'decided', text: 'Decided by the GM' } };
+    });
+  }
+
+  /* Seeded PRNG so the default slice run is a specific, citable run — same idea as Recorded's
+     seed=3 — rather than "trust me, it usually looks like this." Reshuffle swaps to Math.random. */
+  function mulberry32(seed) {
+    return function () {
+      seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+      let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  const SLICE_SEED = 19;
+
+  function funnelSummary(run) {
+    const total = ISSUES.length;
+    const aligned = run.podSyncResults.filter(function (r) { return r.outcome === 'aligned'; }).length;
+    const resolvedSprint = run.sprintResults.filter(function (r) { return r.outcome === 'resolved'; }).length;
+    const resolvedPreGm = run.preGmResults.filter(function (r) { return r.outcome === 'resolved'; }).length;
+    return total + ' issues → ' + aligned + ' aligned at Pod Sync → ' + run.sprintResults.length +
+      ' into Sprint Review (' + resolvedSprint + ' resolved) → ' + run.preGmResults.length +
+      ' into Pre-GM (' + resolvedPreGm + ' resolved) → ' + run.gmResults.length + ' to the GM';
+  }
+
+  function pickSpotlightIssue(vacuumRun) {
+    const escalated = vacuumRun.podSyncResults.filter(function (r) { return r.outcome === 'escalated' && r.reason !== 'structural'; });
+    if (!escalated.length) return ISSUES.filter(function (i) { return i.type !== 'cross_team_dependency'; })[0].id;
+    escalated.sort(function (a, b) { return b.issue.stakes - a.issue.stakes; });
+    return escalated[0].issue.id;
+  }
+
+  function finalOutcomeForIssue(issueId, run) {
+    const gm = run.gmResults.find(function (r) { return r.issue.id === issueId; });
+    if (gm) return gm.outcome === 'deferred' ? { label: 'Deferred to next GM meeting', tier: 'GM' } : { label: 'Decided by the GM', tier: 'GM' };
+    const pregm = run.preGmResults.find(function (r) { return r.issue.id === issueId; });
+    if (pregm) return { label: 'Resolved by directive', tier: 'Pre-GM' };
+    const sprint = run.sprintResults.find(function (r) { return r.issue.id === issueId; });
+    if (sprint) return { label: 'Resolved at Sprint Review', tier: 'Sprint Review' };
+    const pod = run.podSyncResults.find(function (r) { return r.issue.id === issueId; });
+    if (pod) return { label: pod.via === 'mandate' ? 'Aligned at Pod Sync (mandate)' : 'Aligned at Pod Sync', tier: 'Pod Sync' };
+    return null;
+  }
+
+  function buildCollapsedSummaryHtml(run, excludeIds) {
+    const rows = ISSUES.filter(function (i) { return excludeIds.indexOf(i.id) === -1; }).map(function (issue) {
+      const outcome = finalOutcomeForIssue(issue.id, run);
+      return '<div class="collapsed-row"><span class="collapsed-topic">' + issue.topic + '</span>' +
+        '<span class="collapsed-outcome">' + (outcome ? outcome.label + ' · ' + outcome.tier : '—') + '</span></div>';
+    }).join('');
+    const n = ISSUES.length - excludeIds.length;
+    return '<details class="slice-collapsed"><summary>Show the other ' + n + ' issues and where they landed</summary>' +
+      '<div class="collapsed-list">' + rows + '</div></details>';
+  }
+
+  async function playIssueJourney(container, issueId, run, rng, label) {
+    const issue = ISSUES.find(function (i) { return i.id === issueId; });
+    const wrap = document.createElement('div');
+    wrap.className = 'issue-block featured';
+    wrap.innerHTML = '<div class="issue-topic">' + label + ' — ' + issue.topic + '</div>';
+    container.appendChild(wrap);
+
+    const tiers = [
+      { label: null, results: run.podSyncResults, builder: buildPodSyncBlocks },
+      { label: 'Sprint Review — Director Program · VP Product · Director/VP Eng', results: run.sprintResults, builder: function (r, g) { return buildTierBlocks(r, 'sprint', g); } },
+      { label: 'Pre-GM — Directors & VPs, pod leads pulled in as needed', results: run.preGmResults, builder: function (r, g) { return buildTierBlocks(r, 'pregm', g); } },
+      { label: 'GM meeting', results: run.gmResults, builder: buildGmBlocks },
+    ];
+
+    for (let t = 0; t < tiers.length; t++) {
+      const tier = tiers[t];
+      const matches = tier.results.filter(function (r) { return r.issue.id === issueId; });
+      if (!matches.length) break;
+      const block = tier.builder(matches, rng)[0];
+      if (tier.label) {
+        const divider = document.createElement('div');
+        divider.className = 'journey-divider';
+        divider.textContent = '↳ ' + tier.label;
+        wrap.appendChild(divider);
+      }
+      for (let j = 0; j < block.lines.length; j++) {
+        const line = block.lines[j];
+        const lineEl = document.createElement('div');
+        lineEl.className = 'transcript-line' + (reduceMotion ? '' : ' entering');
+        lineEl.innerHTML = '<span class="role-tag ' + line.role + '">' + roleLabel(line.role) + '</span><span class="line-text"></span>';
+        lineEl.querySelector('.line-text').textContent = line.text;
+        wrap.appendChild(lineEl);
+        if (!reduceMotion) await sleep(55);
+      }
+      const verdictEl = document.createElement('div');
+      verdictEl.className = 'transcript-line verdict ' + block.verdict.cls + (reduceMotion ? '' : ' entering');
+      verdictEl.innerHTML = '<span class="line-text"></span>';
+      verdictEl.querySelector('.line-text').textContent = block.verdict.text;
+      wrap.appendChild(verdictEl);
+      if (!reduceMotion) await sleep(90);
+    }
+  }
+
+  async function renderSliceCondition(key, run, structuralId, spotlightId, rng) {
+    document.getElementById('funnel-' + key).textContent = funnelSummary(run);
+    const body = document.getElementById('slice-' + key + '-body');
+    body.innerHTML = '';
+    await playIssueJourney(body, structuralId, run, rng, 'Structural blocker');
+    await playIssueJourney(body, spotlightId, run, rng, 'Representative contested issue');
+    body.insertAdjacentHTML('beforeend', buildCollapsedSummaryHtml(run, [structuralId, spotlightId]));
+  }
+
+  let sliceBusy = false;
+  let sliceMode = 'seed';
+  function sliceButtonLabel() { return sliceMode === 'seed' ? '↻ Reshuffle (fresh random run)' : '⟲ Back to seed=' + SLICE_SEED; }
+
+  async function runSliceComparison(useSeed) {
+    if (sliceBusy) return;
+    sliceBusy = true;
+    const btn = document.getElementById('slice-reshuffle');
+    btn.disabled = true;
+
+    const rngVacuum = useSeed ? mulberry32(SLICE_SEED) : Math.random;
+    const rngParity = useSeed ? mulberry32(SLICE_SEED) : Math.random;
+    const vacuumRun = runPodSlice(true, 'none', rngVacuum);
+    const parityRun = runPodSlice(false, 'full_capped', rngParity);
+
+    const structuralIssue = ISSUES.find(function (i) { return i.type === 'cross_team_dependency'; });
+    const spotlightId = pickSpotlightIssue(vacuumRun);
+
+    document.getElementById('slice-seed-val').textContent = useSeed ? String(SLICE_SEED) : 'fresh (not cited)';
+
+    await Promise.all([
+      renderSliceCondition('vacuum', vacuumRun, structuralIssue.id, spotlightId, rngVacuum),
+      renderSliceCondition('parity', parityRun, structuralIssue.id, spotlightId, rngParity),
+    ]);
+
+    btn.disabled = false;
+    sliceBusy = false;
+  }
+
+  document.getElementById('slice-reshuffle').textContent = sliceButtonLabel();
+  document.getElementById('slice-reshuffle').addEventListener('click', function () {
+    sliceMode = sliceMode === 'seed' ? 'fresh' : 'seed';
+    this.textContent = sliceButtonLabel();
+    runSliceComparison(sliceMode === 'seed');
+  });
+
+  /* ---------- tabs ---------- */
+  const tabLive = document.getElementById('tab-live');
+  const tabRecorded = document.getElementById('tab-recorded');
+  const tabCascade = document.getElementById('tab-cascade');
+  const tabSlice = document.getElementById('tab-slice');
+  const panelLive = document.getElementById('panel-live');
+  const panelRecorded = document.getElementById('panel-recorded');
+  const panelCascade = document.getElementById('panel-cascade');
+  const panelSlice = document.getElementById('panel-slice');
+  let cascadeBooted = false;
+  let sliceBooted = false;
+  function selectTab(which) {
+    tabLive.setAttribute('aria-selected', which === 'live' ? 'true' : 'false');
+    tabRecorded.setAttribute('aria-selected', which === 'recorded' ? 'true' : 'false');
+    tabCascade.setAttribute('aria-selected', which === 'cascade' ? 'true' : 'false');
+    tabSlice.setAttribute('aria-selected', which === 'slice' ? 'true' : 'false');
+    panelLive.hidden = which !== 'live';
+    panelRecorded.hidden = which !== 'recorded';
+    panelCascade.hidden = which !== 'cascade';
+    panelSlice.hidden = which !== 'slice';
+    if (which === 'cascade' && !cascadeBooted) {
+      cascadeBooted = true;
+      runCascadeColumn('vacuum', true, 'none');
+      runCascadeColumn('parity', false, 'full_capped');
+    }
+    if (which === 'slice' && !sliceBooted) {
+      sliceBooted = true;
+      runSliceComparison(true);
+    }
+  }
+  tabLive.addEventListener('click', function () { selectTab('live'); });
+  tabRecorded.addEventListener('click', function () { selectTab('recorded'); });
+  tabCascade.addEventListener('click', function () { selectTab('cascade'); });
+  tabSlice.addEventListener('click', function () { selectTab('slice'); });
+
+  /* boot: run both live columns once so the page isn't empty at rest */
+  runLiveColumn('vacuum', true, 'none');
+  runLiveColumn('parity', false, 'full_capped');
+
+  /* deep link: ?tab=slice|recorded|cascade|live lets a shared URL open somewhere other
+     than Live (e.g. Slice, the tab meant for a non-technical audience) without touching
+     the default in-app tab order. */
+  try {
+    const requestedTab = new URLSearchParams(window.location.search).get('tab');
+    if (requestedTab && ['live', 'recorded', 'cascade', 'slice'].indexOf(requestedTab) !== -1 && requestedTab !== 'live') {
+      selectTab(requestedTab);
+    }
+  } catch (e) { /* URLSearchParams unsupported or blocked — fall back to default Live tab */ }
+})();
+</script>
