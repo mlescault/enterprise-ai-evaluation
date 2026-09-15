@@ -8,9 +8,8 @@ same boundary that separates the [case study](../case-study/false-positive-audit
 and the [H-005 evidence directory](../experiments/h005-v07-v08/README.md) from the
 underlying [v0.8 engine](../simulation/enterprise_sim_engine_v0_8.py) applies here too.
 
-**Live:** once GitHub Pages is enabled for this repo (Settings → Pages → Deploy from
-branch → `main` / `/docs`), this renders at `https://mlescault.github.io/enterprise-ai-evaluation/`.
-Until then, open `index.html` directly in any browser — it has no server dependency.
+**Live:** [https://mlescault.github.io/enterprise-ai-evaluation/](https://mlescault.github.io/enterprise-ai-evaluation/)
+— or open `index.html` directly in any browser; it has no server dependency.
 
 To open straight to the readable tab instead of the default view, append `?tab=slice`
 to the URL.
