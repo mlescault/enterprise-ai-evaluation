@@ -210,6 +210,14 @@ purposes.
 
 See [simulation/README.md](simulation/README.md).
 
+### Interactive Demo
+
+A browser-based companion that renders the same H-005 conditions as a readable
+negotiation trace, with the retired catastrophe metric confined to historical
+display only.
+
+[Browse the demo](docs/README.md) · [Live version](https://mlescault.github.io/enterprise-ai-evaluation/)
+
 ### H-005 Results
 
 The H-005 evidence directory contains:
