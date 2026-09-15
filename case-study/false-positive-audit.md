@@ -61,8 +61,10 @@ The corrected experiment was rerun at:
 The revised simulation produced a narrower behavioral result.
 
 Baseline miss rates remained approximately equal across conditions.
-The important difference was how agents responded after ambiguity
-appeared.
+Per-call correctness is scored the same way regardless of condition, so this
+similarity is an expected consequence of the scoring method, not a measured
+finding about judgment quality. The important difference was how agents
+responded after ambiguity appeared.
 
 Agents operating in the Vacuum condition were substantially more
 likely to resolve ambiguity by guessing, while agents with access to
