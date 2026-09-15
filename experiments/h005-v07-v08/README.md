@@ -12,8 +12,10 @@ The simulation shows a repeatable difference in ambiguity-resolution behavior:
 the structural-vacuum condition relies substantially more on guessing and less
 on formal resolution mechanisms.
 
-Baseline miss rates remain broadly similar across conditions. The retained
-finding therefore concerns process behavior, not underlying agent competence.
+Baseline miss rates remain broadly similar across conditions. Per-call
+correctness is scored the same way in both conditions, so this similarity is
+expected by construction, not a discovered equivalence. The retained finding
+therefore concerns process behavior, not underlying agent competence.
 
 ### Rejected finding: Engine v0.7
 
