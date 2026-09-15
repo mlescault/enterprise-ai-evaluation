@@ -1943,8 +1943,8 @@
   ];
 
   const SLICE = {
-    MATURITY_BONUS: 0.9,        // pod-level negotiating maturity, applied regardless of condition
-    MANDATE_BUDGET: 4,          // capped mandate: at most 4 uses per meeting, spent post-negotiation on
+    MATURITY_BONUS: Math.min(ENGINE.TENURE_BONUS_CAP, ENGINE.TENURE_BONUS_PER_PI * 6), // = 0.30, the engine's own tenure bonus at PI 6 (mid-run) — not an invented number
+    MANDATE_BUDGET: ENGINE.MANDATE_USES_PER_PI,          // = 1, matches the engine's one mandate use per PI, spent post-negotiation on
                                  // the highest-stakes issues Program would otherwise lose (see runPodSlice)
     SPRINT_LEAD_BONUS: -0.3,    // Director/VP authority alone, no rank-gap discount at this tier — same for both
                                  // regimes on purpose: the condition only changes what the pod sends up, not
