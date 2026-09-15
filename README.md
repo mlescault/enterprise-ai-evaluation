@@ -153,6 +153,11 @@ frequently, while observed miss rates remained similar.
 
 This is retained as a **behavioral observation**.
 
+Per-call correctness is scored the same way regardless of condition — the
+engine's decision function never sees which condition is running — so the
+similar miss totals are an expected consequence of that shared scoring, not a
+measured finding about judgment quality.
+
 It is not presented as evidence that one condition was globally more competent,
 more effective, or more successful than the other.
 
