@@ -37,12 +37,27 @@ the chain under each condition.
 **Pod vertical slice** — one pod, thirteen sprint-goal issues, one meeting cycle. The
 opening arguments for each issue are hand-written for this demo; whether an issue
 aligns or escalates, and how far up the chain it travels, is computed using the same
-bid/mandate/rank-gap math as the other tabs. Both conditions run on the identical
-seeded random stream (seed 19 by default, citable; a "Reshuffle" control re-runs on
-fresh randomness instead). Two issues are voiced in full — the one that's structurally
-unresolvable at the pod level, and the highest-stakes issue Program actually loses
-under the vacuum condition. The other eleven are computed in full and shown collapsed,
-not hidden.
+bid/mandate/rank-gap math as the other tabs. Both conditions draw on the same base
+seed (seed 19 by default, citable; a "Reshuffle" control generates a fresh base seed
+and applies that same seed to both columns). Each issue gets its own independent
+random draw per tier, keyed to `(seed, issue, tier)` — so a given issue's Pod Sync
+draw, Sprint Review draw, etc. is identical in both conditions regardless of how many
+other issues each condition has already escalated or resolved by that point; only the
+organizational condition (rank gap, mandate access) changes what happens with that
+draw. Two issues are voiced in full — the one that's structurally unresolvable at the
+pod level, and the highest-stakes issue Program actually loses under the vacuum
+condition. The other eleven are computed in full and shown collapsed, not hidden.
+
+**A scale caveat specific to this tab:** the published engine encounters the rank-gap
+bid discount sparsely, one contested negotiation at a time across many Program
+Increments. This tab puts all thirteen issues' negotiations in a single meeting, so
+the same 0.6 discount gets a full-strength opportunity to bite thirteen times in one
+room instead of being spread across a longer run. That makes the visible gap between
+conditions denser than the underlying engine's own pacing, even though the discount
+value itself is unchanged from the published engine. Any specific alignment numbers
+cited from this tab (e.g., "1 of 13 aligned at Pod Sync" for the default seed) are a
+dense-meeting illustration of that one seed, not the N=400-seed experimental cell
+means reported in the [H-005 evidence directory](../experiments/h005-v07-v08/README.md).
 
 ## Boundary: the retired catastrophe metric
 
